@@ -1,27 +1,43 @@
 package com.mycarmate.models;
 
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.firestore.Firestore;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.cloud.FirestoreClient;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 
 public class FirebaseConnection {
+    private static Firestore db;
 
-    public static void initialize() {
+    public static void initializeFirestore() {
         try {
-            FileInputStream serviceAccount = new FileInputStream("src/main/resources/firebase-service-account-key.json");
+            String serviceAccountPath = System.getProperty("FIREBASE_SERVICE_ACCOUNT_KEY");
+
+            if (serviceAccountPath == null || serviceAccountPath.isEmpty()) {
+                throw new IllegalStateException("FIREBASE_SERVICE_ACCOUNT_KEY is not set");
+            }
+
+            FileInputStream serviceAccount = new FileInputStream(serviceAccountPath);
 
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setDatabaseUrl("https://<mycarmate-20436>.firebaseio.com")
+                    .setProjectId("mycarmate-20436")
                     .build();
 
-            FirebaseApp.initializeApp(options);
-            System.out.println("Firebase initialized successfully!");
+            // Initialize Firebase only if not already initialized
+            if (FirebaseApp.getApps().isEmpty()) {
+                FirebaseApp.initializeApp(options);
+                System.out.println("Firebase initialized successfully!");
+            }
+
+            // Initialize Firestore
+            db = FirestoreClient.getFirestore();
+            System.out.println("Firestore initialized successfully!");
         } catch (IOException e) {
-            System.err.println("Failed to initialize Firebase: " + e.getMessage());
+            System.err.println("Failed to initialize Firestore: " + e.getMessage());
             e.printStackTrace();
         }
     }

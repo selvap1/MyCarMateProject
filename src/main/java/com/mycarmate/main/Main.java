@@ -1,5 +1,6 @@
 package com.mycarmate.main;
 
+import com.mycarmate.firebase.FirebaseAuthHandler;
 import com.mycarmate.models.DatabaseConnection;
 import com.mycarmate.models.FirebaseConnection;
 import javafx.application.Application;
@@ -10,40 +11,45 @@ import javafx.stage.Stage;
 import java.sql.Connection;
 
 public class Main extends Application {
-        @Override
-        public void start(Stage primaryStage) {
-            StackPane root = new StackPane(); // Root node for the scene
-            Scene scene = new Scene(root, 800, 600); // Create the scene with width and height
+    @Override
+    public void start(Stage primaryStage) {
+        StackPane root = new StackPane(); // Root node for the scene
+        Scene scene = new Scene(root, 800, 600); // Create the scene with width and height
 
-
-            primaryStage.setTitle("My JavaFX App");
-            primaryStage.setScene(scene); // Attach the scene to the stage
-            primaryStage.show(); // Display the stage
-        }
+        primaryStage.setTitle("My JavaFX App");
+        primaryStage.setScene(scene); // Attach the scene to the stage
+        primaryStage.show(); // Display the stage
+    }
 
     public static void main(String[] args) {
-        // Set the path to the service account key
-        System.setProperty("GOOGLE_APPLICATION_CREDENTIALS", "src/main/resources/service-account-key.json");
+        // Set the path to the service account key for Google Cloud SQL
+        System.setProperty("GOOGLE_APPLICATION_CREDENTIALS", "src/main/java/resources/service-account-key.json");
 
-        // Initialize Firebase
-        FirebaseConnection.initialize();
+        // Set the path to the service account key for Firebase
+        System.setProperty("FIREBASE_SERVICE_ACCOUNT_KEY", "src/main/java/resources/firebase-key.json");
+
+        // Initialize Firestore
+        FirebaseConnection.initializeFirestore();
+
+        // Initialize FirebaseAuthHandler
+        FirebaseAuthHandler handler = new FirebaseAuthHandler();
 
 
-        // Test the database connection
+        // Test Google Cloud SQL database connection
+        System.out.println("Testing Google Cloud SQL Database Connection...");
         try (Connection conn = DatabaseConnection.getConnection()) {
             if (conn != null) {
-                System.out.println("Connected to the database successfully!");
+                System.out.println("Connected to the Google Cloud SQL database successfully!");
             } else {
-                System.out.println("Failed to make a connection!");
+                System.out.println("Failed to connect to the Google Cloud SQL database!");
             }
         } catch (Exception e) {
-            System.err.println("Database connection error: " + e.getMessage());
+            System.err.println("Google Cloud SQL Database connection error: " + e.getMessage());
             e.printStackTrace();
-            // Optionally exit the program if the connection fails
-            System.exit(1);
         }
 
         // Launch the JavaFX application
+        System.out.println("Launching JavaFX Application...");
         launch(args);
     }
-    };
+}
