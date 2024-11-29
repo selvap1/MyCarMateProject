@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.mycarmate.controllers.HomePageController" alignment="CENTER" spacing="20" styleClass="home-container">
+    <Label text="Welcome to My Car Mate" styleClass="home-title" />
+    <Label text="Your one-stop solution for managing your car maintenance records and insurance information." wrapText="true" styleClass="home-description" />
+    <Label text="Easily track your vehicle's maintenance history, get reminders for upcoming services, and manage your car's insurance details all in one place." wrapText="true" styleClass="home-description" />
+    <Button text="Get Started" styleClass="get-started-button" onAction="#navigateToRegister" />
+</VBox>
