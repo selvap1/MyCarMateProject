@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" alignment="CENTER" spacing="20" styleClass="login-container">
+    <!-- Logo -->
+    <ImageView fx:id="logoImageView" fitWidth="200" fitHeight="150" />
+
+    <!-- Title -->
+    <Label text="Log In" styleClass="login-title" />
+
+    <!-- Error Message -->
+    <Text fx:id="errorText" styleClass="error-message" visible="false" />
+
+    <!-- Login Form -->
+    <VBox spacing="10" alignment="CENTER" styleClass="login-form">
+        <TextField fx:id="emailField" promptText="Email" styleClass="login-input" />
+        <PasswordField fx:id="passwordField" promptText="Password" styleClass="login-input" />
+        <Button text="Login" styleClass="login-button" onAction="#handleLogin" />
+    </VBox>
+
+    <!-- Links -->
+    <VBox spacing="5" alignment="CENTER" styleClass="login-links">
+        <Label text="Forgot Password?" styleClass="forgot-password" />
+        <Label text="Not a member?" styleClass="not-member" />
+        <Button text="Sign up" styleClass="signup-button" onAction="#handleSignUp" />
+    </VBox>
+</VBox>
