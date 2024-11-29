@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.mycarmate.controllers.CarMaintenancePageController"
+      styleClass="container" spacing="20" alignment="TOP_CENTER">
+
+    <!-- Car Selection -->
+    <HBox spacing="10" styleClass="form-section">
+        <Label text="Select Car" styleClass="form-label" />
+        <ComboBox fx:id="carDropdown" promptText="Select Car" styleClass="form-select" />
+    </HBox>
+
+    <!-- Add Maintenance Record -->
+    <Label text="Add Maintenance Record" styleClass="section-header" />
+    <GridPane hgap="10" vgap="10" styleClass="records-grid">
+        <Label text="Cost:" />
+        <TextField fx:id="costField" promptText="Enter cost" />
+
+        <Label text="Date of Service:" />
+        <DatePicker fx:id="dateOfServicePicker" />
+
+        <Label text="Service Type:" />
+        <ComboBox fx:id="serviceTypeDropdown" promptText="Select Service Type">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Inspection" />
+                    <String fx:value="Registration" />
+                    <String fx:value="Oil Change" />
+                    <String fx:value="Other" />
+                </FXCollections>
+            </items>
+        </ComboBox>
+        <TextField fx:id="customServiceTypeField" promptText="Enter custom service type" visible="false" />
+
+        <Label text="Mileage at Service:" />
+        <TextField fx:id="mileageAtServiceField" promptText="Enter mileage" />
+    </GridPane>
+    <Button text="Add Record" onAction="#handleAddRecord" styleClass="button" />
+
+    <!-- Maintenance Records -->
+    <Label text="Maintenance Records" styleClass="section-header" />
+    <TableView fx:id="maintenanceTable" styleClass="records-table">
+        <columns>
+            <TableColumn fx:id="costColumn" text="Cost" />
+            <TableColumn fx:id="dateOfServiceColumn" text="Date of Service" />
+            <TableColumn fx:id="serviceTypeColumn" text="Service Type" />
+            <TableColumn fx:id="mileageColumn" text="Mileage" />
+        </columns>
+    </TableView>
+</VBox>
