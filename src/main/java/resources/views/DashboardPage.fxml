@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.mycarmate.controllers.DashboardController" styleClass="dashboard-container">
+
+    <!-- Left Panel -->
+    <VBox fx:id="leftPanel" alignment="CENTER" spacing="10" styleClass="left-panel">
+        <ImageView fx:id="profileImage" fitWidth="100" fitHeight="100" styleClass="profile-image" />
+        <Button fx:id="editProfileButton" text="Edit Profile" onAction="#openProfileModal" styleClass="side-button" />
+        <Button fx:id="addCarButton" text="Add Car" onAction="#navigateToAddCar" styleClass="side-button" />
+        <Button fx:id="viewMaintenanceButton" text="View Maintenance Records" onAction="#navigateToMaintenance" styleClass="side-button" />
+        <Button fx:id="viewInsuranceButton" text="View Insurance Information" onAction="#navigateToInsurance" styleClass="side-button" />
+    </VBox>
+
+    <!-- Right Panel -->
+    <VBox fx:id="rightPanel" spacing="15" styleClass="right-panel">
+        <Label fx:id="dashboardHeading" text="Dashboard" styleClass="dashboard-heading" />
+        <Label fx:id="welcomeMessage" text="Welcome, User!" styleClass="welcome-message" />
+
+        <!-- My Cars Section -->
+        <VBox spacing="10" styleClass="table-section">
+            <Label text="My Cars" styleClass="table-heading" />
+            <TableView fx:id="carsTable" styleClass="dashboard-table">
+                <columns>
+                    <TableColumn fx:id="makeColumn" text="Make" />
+                    <TableColumn fx:id="modelColumn" text="Model" />
+                    <TableColumn fx:id="yearColumn" text="Year" />
+                    <TableColumn fx:id="actionsColumn" text="Actions" />
+                </columns>
+            </TableView>
+        </VBox>
+
+        <!-- Reminders Section -->
+        <VBox spacing="10" styleClass="table-section">
+            <Label text="Reminders" styleClass="table-heading" />
+            <TableView fx:id="remindersTable" styleClass="dashboard-table">
+                <columns>
+                    <TableColumn fx:id="reminderColumn" text="Reminder" />
+                </columns>
+            </TableView>
+        </VBox>
+    </VBox>
+
+</BorderPane>
