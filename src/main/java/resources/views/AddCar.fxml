@@ -1,14 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0" >
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.mycarmate.controllers.AddCarPageController"
+      styleClass="container" spacing="20" alignment="TOP_CENTER">
 
-</AnchorPane>
+    <!-- Heading -->
+    <Label text="Add a Car" styleClass="heading" />
+
+    <!-- Back Button -->
+    <Button text="Back to Dashboard" onAction="#navigateToDashboard" styleClass="backButton" />
+
+    <!-- Form Section -->
+    <GridPane hgap="10" vgap="15" styleClass="form-grid">
+        <Label text="Make:" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="label" />
+        <TextField fx:id="makeField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+        <Label text="Model:" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="label" />
+        <TextField fx:id="modelField" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+        <Label text="Year:" GridPane.rowIndex="2" GridPane.columnIndex="0" styleClass="label" />
+        <TextField fx:id="yearField" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+        <Label text="VIN:" GridPane.rowIndex="3" GridPane.columnIndex="0" styleClass="label" />
+        <TextField fx:id="vinField" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+        <Label text="Mileage:" GridPane.rowIndex="4" GridPane.columnIndex="0" styleClass="label" />
+        <TextField fx:id="mileageField" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+
+        <Label text="Registration Exp. Date:" GridPane.rowIndex="5" GridPane.columnIndex="0" styleClass="label" />
+        <DatePicker fx:id="registrationExpDatePicker" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+
+        <Label text="Inspection Exp. Date:" GridPane.rowIndex="6" GridPane.columnIndex="0" styleClass="label" />
+        <DatePicker fx:id="inspectionDatePicker" GridPane.rowIndex="6" GridPane.columnIndex="1" />
+    </GridPane>
+
+    <!-- Submit Button -->
+    <Button text="Submit" onAction="#handleSubmit" styleClass="submitButton" />
+</VBox>
