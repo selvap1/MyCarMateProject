@@ -7,3 +7,43 @@
 .table-view {
     -fx-background-color: #f0f0f0;
 }
+.login-container {
+    -fx-background-color: #f4f4f9;
+    -fx-padding: 20px;
+    -fx-alignment: center;
+}
+
+.login-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+.error-message {
+    -fx-text-fill: red;
+}
+
+.login-form .login-input {
+    -fx-pref-width: 250px;
+    -fx-padding: 10px;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.login-button {
+    -fx-background-color: #007bff;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 10px;
+}
+
+.signup-button {
+    -fx-background-color: #28a745;
+    -fx-text-fill: white;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 10px;
+}
