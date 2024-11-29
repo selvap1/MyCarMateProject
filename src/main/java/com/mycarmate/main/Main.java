@@ -1,10 +1,12 @@
-package com.mycarmate.models;
+package com.mycarmate.main;
 
+import com.mycarmate.models.DatabaseConnection;
+import com.mycarmate.models.FirebaseConnection;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import com.mycarmate.models.DatabaseConnection;
+
 import java.sql.Connection;
 
 public class Main extends Application {
@@ -22,6 +24,9 @@ public class Main extends Application {
     public static void main(String[] args) {
         // Set the path to the service account key
         System.setProperty("GOOGLE_APPLICATION_CREDENTIALS", "src/main/resources/service-account-key.json");
+
+        // Initialize Firebase
+        FirebaseConnection.initialize();
 
 
         // Test the database connection
