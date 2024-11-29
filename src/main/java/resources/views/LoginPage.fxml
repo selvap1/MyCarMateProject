@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
 
-<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" alignment="CENTER" spacing="20" styleClass="login-container">
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" alignment="CENTER" spacing="20" styleClass="login-container" fx:controller="com.mycarmate.controllers.LoginController">
     <!-- Logo -->
     <ImageView fx:id="logoImageView" fitWidth="200" fitHeight="150" />
 

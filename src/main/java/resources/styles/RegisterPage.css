@@ -1,0 +1,87 @@
+/* General styles */
+.register-container {
+    -fx-max-width: 400px; /* Limit width for better readability */
+    -fx-margin: auto; /* Center the form */
+    -fx-background-color: #fff; /* White background for the form */
+    -fx-padding: 20px; /* Spacing inside the container */
+    -fx-border-radius: 8px; /* Rounded corners */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 2); /* Subtle shadow for depth */
+}
+
+/* Heading styles */
+.register-title {
+    -fx-text-alignment: center; /* Center the title */
+    -fx-text-fill: #333; /* Dark color for better contrast */
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+/* Logo styles */
+.logo {
+    -fx-margin: 0 auto 20px auto; /* Center the logo and add space below */
+    -fx-fit-width: 150px; /* Adjust the maximum width as needed */
+    -fx-preserve-ratio: true; /* Maintain aspect ratio */
+}
+
+/* Form element styles */
+.register-form {
+    -fx-alignment: center; /* Center form elements */
+    -fx-spacing: 15px; /* Space between form elements */
+}
+
+/* Input fields */
+.text-field, .password-field {
+    -fx-pref-width: 100%; /* Make inputs take full width */
+    -fx-padding: 10px; /* Inner spacing for inputs */
+    -fx-border-color: #ccc; /* Light border for inputs */
+    -fx-border-radius: 4px; /* Rounded corners */
+    -fx-font-size: 16px; /* Font size for better readability */
+    -fx-background-radius: 4px;
+    -fx-box-sizing: border-box; /* Ensure padding and border are included */
+}
+
+/* Button styles */
+.button {
+    -fx-padding: 10px;
+    -fx-background-color: #5cb85c; /* Green background */
+    -fx-text-fill: white; /* White text color */
+    -fx-border-radius: 4px; /* Rounded corners */
+    -fx-font-size: 16px; /* Font size */
+    -fx-cursor: hand; /* Pointer on hover */
+}
+
+.button:disabled {
+    -fx-background-color: #ccc; /* Grey out button when disabled */
+}
+
+.button:hover {
+    -fx-background-color: #4cae4c; /* Slightly darker green on hover */
+}
+
+/* Link styles */
+.login-link {
+    -fx-text-alignment: center; /* Center the login link */
+    -fx-margin-top: 15px; /* Space above the link */
+}
+
+.login-link .hyperlink {
+    -fx-text-fill: #007bff; /* Bootstrap primary color */
+    -fx-underline: false; /* Remove underline */
+}
+
+.login-link .hyperlink:hover {
+    -fx-underline: true; /* Underline on hover */
+}
+
+/* Error and success message styles */
+.error-message {
+    -fx-text-fill: red; /* Red for error messages */
+    -fx-text-alignment: center;
+    -fx-margin: 10px 0; /* Vertical spacing for messages */
+}
+
+.success-message {
+    -fx-text-fill: green; /* Green for success messages */
+    -fx-text-alignment: center;
+    -fx-margin: 10px 0; /* Vertical spacing for messages */
+}
