@@ -7,41 +7,45 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.sql.Connection;
 
 public class Main extends Application {
-        @Override
-        public void start(Stage primaryStage) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginPage.fxml"));
+    @Override
+    public void start(Stage primaryStage) {
+        try {
+            // Load the FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/LoginPage.fxml"));
             Parent root = loader.load();
+
+            // Create the scene and apply styles
             Scene scene = new Scene(root);
-            scene.getStylesheets().add(getClass().getResource("LoginPage.css").toExternalForm());
-            StackPane root = new StackPane(); // Root node for the scene
-            Scene scene = new Scene(root, 800, 600); // Create the scene with width and height
+            scene.getStylesheets().add(getClass().getResource("/styles/LoginPage.css").toExternalForm());
+
+            // Set the stage properties
+            primaryStage.setTitle("MyCarMate");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+
+        } catch (Exception e) {
+            System.err.println("Error loading FXML or CSS: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
         // Set the path to the service account key for Google Cloud SQL
         System.setProperty("GOOGLE_APPLICATION_CREDENTIALS", "src/main/java/resources/service-account-key.json");
 
-
-            primaryStage.setTitle("MyCarMate");
-            primaryStage.setScene(scene); // Attach the scene to the stage
-            primaryStage.show(); // Display the stage
-        }
-
         // Set the path to the service account key for Firebase
         System.setProperty("FIREBASE_SERVICE_ACCOUNT_KEY", "src/main/java/resources/firebase-key.json");
-
 
         // Initialize Firestore
         FirebaseConnection.initializeFirestore();
 
         // Initialize FirebaseAuthHandler
         FirebaseAuthHandler handler = new FirebaseAuthHandler();
-
 
         // Test Google Cloud SQL database connection
         System.out.println("Testing Google Cloud SQL Database Connection...");

@@ -1,16 +1,15 @@
 package com.mycarmate.controllers;
-import javafx.fxml.FXML;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.io.OutputStream;
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.mycarmate.dao.UserDAO;
+import com.mycarmate.firebase.FirebaseAuthHandler;
+import com.mycarmate.dao.SessionManager;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 
 public class LoginController {
 
@@ -21,93 +20,94 @@ public class LoginController {
     private PasswordField passwordField;
 
     @FXML
-    private Text errorText;
+    private Button loginButton;
 
     @FXML
-    private ImageView logoImageView;
+    private Button signUpButton;
+
+    @FXML
+    private Label errorLabel;
+
+    private FirebaseAuthHandler firebaseAuthHandler;
 
     @FXML
     public void initialize() {
-        // Set logo image
-        Image logoImage = new Image("file:src/main/resources/assets/mycarmate-high-resolution-logo-transparent.png");
-        logoImageView.setImage(logoImage);
+        firebaseAuthHandler = new FirebaseAuthHandler(); // Initialize FirebaseAuthHandler
     }
+
 
     @FXML
     private void handleLogin() {
-        String email = emailField.getText();
-        String password = passwordField.getText();
-
-        if (email.isEmpty() || password.isEmpty()) {
-            showError("Email and password are required.");
-            return;
-        }
-
         try {
-            // Mock Firebase authentication call
-            boolean loginSuccess = authenticateWithFirebase(email, password);
+            String email = emailField.getText();
+            String password = passwordField.getText();
 
-            if (loginSuccess) {
-                // Make a backend API call to get the username
-                String username = fetchUsernameFromBackend();
-                System.out.println("Login successful! Username: " + username);
+            if (email.isEmpty() || password.isEmpty()) {
+                errorLabel.setText("Please fill in all fields.");
+                return;
+            }
 
-                // Navigate to dashboard
-                navigateToDashboard(username);
+            // Authenticate user (ensure this calls FirebaseAuthHandler appropriately)
+            FirebaseAuthHandler authHandler = new FirebaseAuthHandler();
+            String firebaseUid = authHandler.authenticateUser(email, password);
+
+            if (firebaseUid != null) {
+                // Fetch userId from the database using firebaseUid
+                int userId = UserDAO.fetchUserIdFromFirebaseUid(firebaseUid);
+
+                // Set the userId in SessionManager
+                SessionManager.setLoggedInUserId(userId);
+                System.out.println("Logged-in user ID stored in SessionManager: " + userId);
+
+                // Navigate to the dashboard
+                loadDashboardScene(firebaseUid);
             } else {
-                showError("Login failed. Please check your credentials.");
+                errorLabel.setText("Invalid email or password.");
             }
         } catch (Exception e) {
+            System.err.println("Error during login: " + e.getMessage());
             e.printStackTrace();
-            showError("An error occurred. Please try again later.");
+            errorLabel.setText("An error occurred. Please try again.");
         }
     }
 
+
+
+
+    /**
+     * Handle the sign-up button action to navigate to the registration page.
+     */
     @FXML
     private void handleSignUp() {
-        // Handle navigation to Sign Up page
-        System.out.println("Navigating to Sign Up page...");
-        // Implement navigation logic here
-    }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/RegisterPage.fxml"));
+            Parent registerRoot = loader.load();
 
-    private void showError(String message) {
-        errorText.setText(message);
-        errorText.setVisible(true);
-    }
-
-    private boolean authenticateWithFirebase(String email, String password) {
-        // TODO: Integrate Firebase authentication here
-        System.out.println("Authenticating with Firebase: " + email);
-        return true; // Mock authentication success
-    }
-
-    private String fetchUsernameFromBackend() throws Exception {
-        // Mock backend call
-        URL url = new URL("http://localhost:5050/getUsername");
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("POST");
-        conn.setRequestProperty("Content-Type", "application/json");
-        conn.setDoOutput(true);
-
-        String requestBody = "{\"uid\": \"mockUID\"}";
-        try (OutputStream os = conn.getOutputStream()) {
-            os.write(requestBody.getBytes());
-            os.flush();
-        }
-
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-            StringBuilder response = new StringBuilder();
-            String line;
-            while ((line = br.readLine()) != null) {
-                response.append(line);
-            }
-            System.out.println("Backend response: " + response);
-            return "MockUsername"; // Extract username from response (mocked here)
+            Stage primaryStage = (Stage) signUpButton.getScene().getWindow();
+            Scene registerScene = new Scene(registerRoot);
+            primaryStage.setScene(registerScene);
+            primaryStage.setTitle("Sign Up - MyCarMate");
+        } catch (Exception e) {
+            System.err.println("Error navigating to RegisterPage: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    private void navigateToDashboard(String username) {
-        System.out.println("Navigating to dashboard with username: " + username);
-        // Implement navigation logic here
+    private void loadDashboardScene(String firebaseUid) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/DashboardPage.fxml"));
+            Parent dashboardRoot = loader.load();
+
+            // Pass the logged-in user ID to the DashboardController
+            DashboardController dashboardController = loader.getController();
+            dashboardController.initializeDashboard(firebaseUid);
+
+            Stage primaryStage = (Stage) loginButton.getScene().getWindow();
+            Scene dashboardScene = new Scene(dashboardRoot);
+            primaryStage.setScene(dashboardScene);
+        } catch (Exception e) {
+            System.err.println("Error loading dashboard: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

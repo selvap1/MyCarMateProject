@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="10" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.mycarmate.controllers.AddCarController"
+      style="-fx-padding: 20; -fx-background-color: #f8f8f8;">
+
+    <!-- Title -->
+    <Label text="Add New Car" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+    <!-- Form Fields -->
+    <TextField fx:id="makeField" promptText="Make" />
+    <TextField fx:id="modelField" promptText="Model" />
+    <TextField fx:id="yearField" promptText="Year" />
+    <TextField fx:id="vinField" promptText="VIN" />
+    <TextField fx:id="mileageField" promptText="Mileage" />
+
+    <!-- Registration Date -->
+    <Label text="Registration Expiration Date:" style="-fx-font-size: 14px;" />
+    <HBox spacing="10">
+        <ComboBox fx:id="registrationMonthPicker" promptText="Month" />
+        <ComboBox fx:id="registrationYearPicker" promptText="Year" />
+    </HBox>
+
+    <!-- Inspection Date -->
+    <Label text="Inspection Expiration Date:" style="-fx-font-size: 14px;" />
+    <HBox spacing="10">
+        <ComboBox fx:id="inspectionMonthPicker" promptText="Month" />
+        <ComboBox fx:id="inspectionYearPicker" promptText="Year" />
+    </HBox>
+
+    <!-- Buttons -->
+    <HBox spacing="10" alignment="center" style="-fx-padding: 10 0 0 0;">
+        <Button text="Save" onAction="#handleSave" styleClass="modal-save-button" />
+        <Button text="Cancel" onAction="#handleCancel" styleClass="modal-cancel-button" />
+    </HBox>
+</VBox>

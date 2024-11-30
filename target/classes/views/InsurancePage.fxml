@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.mycarmate.controllers.InsurancePageController"
+      styleClass="insurance-container" spacing="20" alignment="TOP_CENTER">
+
+    <!-- Page Header -->
+    <Label text="Insurance Information" styleClass="page-header" />
+
+    <!-- Add Insurance Form -->
+    <VBox spacing="10" styleClass="insurance-form">
+        <Label text="Add Insurance" styleClass="form-header" />
+        <ComboBox fx:id="carDropdown" promptText="-- Select a Car --" styleClass="car-dropdown" />
+        <TextField fx:id="providerNameField" promptText="Provider Name" />
+        <TextField fx:id="policyNumberField" promptText="Policy Number" />
+        <DatePicker fx:id="startDatePicker" promptText="Start Date" />
+        <DatePicker fx:id="endDatePicker" promptText="End Date" />
+        <TextField fx:id="coverageAmountField" promptText="Coverage Amount" />
+        <Button text="Add Insurance" onAction="#handleAddInsurance" styleClass="form-button" />
+    </VBox>
+
+    <!-- Insurance Records Table -->
+    <VBox spacing="10" styleClass="insurance-records">
+        <Label text="Insurance Records" styleClass="records-header" />
+        <TableView fx:id="insuranceTable">
+            <columns>
+                <TableColumn fx:id="carColumn" text="Car" />
+                <TableColumn fx:id="providerColumn" text="Provider" />
+                <TableColumn fx:id="policyNumberColumn" text="Policy Number" />
+                <TableColumn fx:id="startColumn" text="Start" />
+                <TableColumn fx:id="endColumn" text="End" />
+                <TableColumn fx:id="coverageColumn" text="Coverage" />
+                <TableColumn fx:id="actionsColumn" text="Actions" />
+            </columns>
+        </TableView>
+    </VBox>
+</VBox>

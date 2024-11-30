@@ -4,28 +4,26 @@ import javafx.beans.property.*;
 
 public class MaintenanceRecord {
 
-    private final SimpleIntegerProperty recordId = new SimpleIntegerProperty();
-    private final SimpleStringProperty carId = new SimpleStringProperty();
-    private final SimpleDoubleProperty cost = new SimpleDoubleProperty();
-    private final SimpleStringProperty dateOfService = new SimpleStringProperty();
-    private final SimpleStringProperty serviceType = new SimpleStringProperty();
-    private final SimpleIntegerProperty mileageAtService = new SimpleIntegerProperty();
+    private final IntegerProperty recordId = new SimpleIntegerProperty();
+    private final IntegerProperty carId = new SimpleIntegerProperty();
+    private final StringProperty date = new SimpleStringProperty();
+    private final StringProperty serviceType = new SimpleStringProperty();
+    private final DoubleProperty cost = new SimpleDoubleProperty();
+    private final IntegerProperty mileage = new SimpleIntegerProperty();
+    private final StringProperty createdAt = new SimpleStringProperty();
 
-    // Default Constructor
-    public MaintenanceRecord() {
-    }
-
-    // Parameterized Constructor
-    public MaintenanceRecord(int recordId, String carId, double cost, String dateOfService, String serviceType, int mileageAtService) {
+    // Constructor
+    public MaintenanceRecord(int recordId, int carId, String date, String serviceType, double cost, int mileage, String createdAt) {
         this.recordId.set(recordId);
         this.carId.set(carId);
-        this.cost.set(cost);
-        this.dateOfService.set(dateOfService);
+        this.date.set(date);
         this.serviceType.set(serviceType);
-        this.mileageAtService.set(mileageAtService);
+        this.cost.set(cost);
+        this.mileage.set(mileage);
+        this.createdAt.set(createdAt);
     }
 
-    // Getters and Setters with JavaFX Properties
+    // Getters and setters with properties
 
     public int getRecordId() {
         return recordId.get();
@@ -35,44 +33,32 @@ public class MaintenanceRecord {
         this.recordId.set(recordId);
     }
 
-    public SimpleIntegerProperty recordIdProperty() {
+    public IntegerProperty recordIdProperty() {
         return recordId;
     }
 
-    public String getCarId() {
+    public int getCarId() {
         return carId.get();
     }
 
-    public void setCarId(String carId) {
+    public void setCarId(int carId) {
         this.carId.set(carId);
     }
 
-    public SimpleStringProperty carIdProperty() {
+    public IntegerProperty carIdProperty() {
         return carId;
     }
 
-    public double getCost() {
-        return cost.get();
+    public String getDate() {
+        return date.get();
     }
 
-    public void setCost(double cost) {
-        this.cost.set(cost);
+    public void setDate(String date) {
+        this.date.set(date);
     }
 
-    public SimpleDoubleProperty costProperty() {
-        return cost;
-    }
-
-    public String getDateOfService() {
-        return dateOfService.get();
-    }
-
-    public void setDateOfService(String dateOfService) {
-        this.dateOfService.set(dateOfService);
-    }
-
-    public SimpleStringProperty dateOfServiceProperty() {
-        return dateOfService;
+    public StringProperty dateProperty() {
+        return date;
     }
 
     public String getServiceType() {
@@ -83,32 +69,57 @@ public class MaintenanceRecord {
         this.serviceType.set(serviceType);
     }
 
-    public SimpleStringProperty serviceTypeProperty() {
+    public StringProperty serviceTypeProperty() {
         return serviceType;
     }
 
-    public int getMileageAtService() {
-        return mileageAtService.get();
+    public double getCost() {
+        return cost.get();
     }
 
-    public void setMileageAtService(int mileageAtService) {
-        this.mileageAtService.set(mileageAtService);
+    public void setCost(double cost) {
+        this.cost.set(cost);
     }
 
-    public SimpleIntegerProperty mileageAtServiceProperty() {
-        return mileageAtService;
+    public DoubleProperty costProperty() {
+        return cost;
     }
 
-    // toString() for Debugging and Display
+    public int getMileage() {
+        return mileage.get();
+    }
+
+    public void setMileage(int mileage) {
+        this.mileage.set(mileage);
+    }
+
+    public IntegerProperty mileageProperty() {
+        return mileage;
+    }
+
+    public String getCreatedAt() {
+        return createdAt.get();
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt.set(createdAt);
+    }
+
+    public StringProperty createdAtProperty() {
+        return createdAt;
+    }
+
+    // toString for debugging purposes
     @Override
     public String toString() {
         return "MaintenanceRecord{" +
-                "recordId=" + recordId.get() +
-                ", carId='" + carId.get() + '\'' +
-                ", cost=" + cost.get() +
-                ", dateOfService='" + dateOfService.get() + '\'' +
-                ", serviceType='" + serviceType.get() + '\'' +
-                ", mileageAtService=" + mileageAtService.get() +
+                "recordId=" + getRecordId() +
+                ", carId=" + getCarId() +
+                ", date='" + getDate() + '\'' +
+                ", serviceType='" + getServiceType() + '\'' +
+                ", cost=" + getCost() +
+                ", mileage=" + getMileage() +
+                ", createdAt='" + getCreatedAt() + '\'' +
                 '}';
     }
 }

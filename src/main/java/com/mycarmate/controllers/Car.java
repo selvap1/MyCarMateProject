@@ -30,6 +30,15 @@ public class Car {
         this.inspectionDate.set(inspectionDate);
     }
 
+    // Simplified constructor for dashboard display
+    public Car(String make, String model, int year) {
+        this.make.set(make);
+        this.model.set(model);
+        this.year.set(year);
+    }
+
+
+
     // Getters and Setters with JavaFX Properties
 
     public String getCarId() {
