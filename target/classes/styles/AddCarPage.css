@@ -1,0 +1,56 @@
+.container {
+    -fx-padding: 20px;
+    -fx-background-color: #f8f8f8;
+    -fx-font-family: Arial, sans-serif;
+    -fx-spacing: 20px;
+    -fx-alignment: center;
+}
+
+.heading {
+    -fx-text-alignment: center;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-margin-bottom: 20px;
+}
+
+.backButton {
+    -fx-background-color: #007BFF;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+    -fx-alignment: center;
+    -fx-transition: background-color 0.3s ease;
+}
+
+.backButton:hover {
+    -fx-background-color: #0056b3;
+}
+
+.label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-margin-bottom: 5px;
+}
+
+.form-input {
+    -fx-padding: 8px;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 4px;
+    -fx-font-size: 16px;
+    -fx-width: 100%;
+}
+
+.submitButton {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.submitButton:hover {
+    -fx-background-color: #45a049;
+}
