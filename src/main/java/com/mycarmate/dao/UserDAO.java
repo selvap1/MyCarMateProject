@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserDAO {
 
@@ -40,4 +42,24 @@ public class UserDAO {
 
         return userId;
     }
+
+    public Map<String, String> fetchUserProfile(String firebaseUid) throws Exception {
+        String query = "SELECT username, profile_picture FROM users WHERE firebase_uid = ?";
+        Map<String, String> userProfile = new HashMap<>();
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, firebaseUid);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    userProfile.put("username", rs.getString("username"));
+                    userProfile.put("profile_picture", rs.getString("profile_picture"));
+                }
+            }
+        }
+
+        return userProfile;
     }
+
+}

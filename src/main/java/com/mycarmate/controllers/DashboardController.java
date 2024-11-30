@@ -1,6 +1,7 @@
 package com.mycarmate.controllers;
 
 import com.mycarmate.dao.CarDAO;
+import com.mycarmate.dao.MaintenanceDAO;
 import com.mycarmate.dao.UserDAO;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -19,6 +20,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.util.List;
+import java.util.Map;
 
 public class DashboardController {
 
@@ -74,21 +76,38 @@ public class DashboardController {
     public void initializeDashboard(String firebaseUid) {
         System.out.println("Initializing dashboard for Firebase UID: " + firebaseUid);
 
-        // Resolve user_id from Firebase UID
         UserDAO userDAO = new UserDAO();
-        int userId = userDAO.fetchUserIdFromFirebaseUid(firebaseUid);
+        try {
+            // Fetch username and profile picture
+            Map<String, String> userProfile = userDAO.fetchUserProfile(firebaseUid);
 
-        if (userId != -1) {
-            setLoggedInUserId(userId); // Set userId and fetch cars
-        } else {
-            System.err.println("Failed to resolve user_id for Firebase UID: " + firebaseUid);
+            // Update the welcome message with the username
+            String username = userProfile.getOrDefault("username", "User");
+            welcomeMessage.setText("Welcome " + username + " to your Dashboard!");
+
+            // Update profile image
+            String profilePicture = userProfile.get("profile_picture");
+            if (profilePicture != null && !profilePicture.isEmpty()) {
+                profileImage.setImage(new Image(profilePicture));
+            } else {
+                profileImage.setImage(new Image("/assets/account_circle.png"));
+            }
+
+            // Resolve user_id and fetch cars
+            int userId = userDAO.fetchUserIdFromFirebaseUid(firebaseUid);
+            if (userId != -1) {
+                setLoggedInUserId(userId); // Set userId and fetch cars
+            } else {
+                System.err.println("Failed to resolve user_id for Firebase UID: " + firebaseUid);
+            }
+        } catch (Exception e) {
+            System.err.println("Error fetching user profile or user_id: " + e.getMessage());
+            e.printStackTrace();
+
+            // Fallback to default values
+            welcomeMessage.setText("Welcome User to your Dashboard!");
+            profileImage.setImage(new Image("/assets/account_circle.png"));
         }
-
-        // Set the profile image (default or fetched from profile data)
-        profileImage.setImage(new Image("/assets/account_circle.png"));
-
-        // Example: Set username dynamically
-        welcomeMessage.setText("Welcome User to your Dashboard!");
 
         // Set up table columns
         makeColumn.setCellValueFactory(new PropertyValueFactory<>("make"));
@@ -104,7 +123,6 @@ public class DashboardController {
         // Apply constrained resize policy
         carsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-
         // Set the ObservableList to the TableView
         carsTable.setItems(cars);
 
@@ -112,13 +130,14 @@ public class DashboardController {
         actionsColumn.setCellFactory(col -> new TableCell<Car, String>() {
             private final Button editButton = new Button("Edit");
             private final Button deleteButton = new Button("Delete");
-            private final HBox buttonContainer = new HBox(5, editButton, deleteButton);
 
             {
                 editButton.getStyleClass().add("edit-button");
                 deleteButton.getStyleClass().add("delete-button");
-            }
 
+                editButton.setOnAction(event -> editCar(getTableView().getItems().get(getIndex())));
+                deleteButton.setOnAction(event -> deleteCar(getTableView().getItems().get(getIndex())));
+            }
 
             @Override
             protected void updateItem(String item, boolean empty) {
@@ -131,16 +150,16 @@ public class DashboardController {
                     setGraphic(buttons);
                 }
             }
-
         });
 
         // Set up reminders table
         reminderColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue()));
         remindersTable.setItems(reminders);
 
-        // Load static reminders (replace with dynamic logic if needed)
+        // Load reminders dynamically
         loadReminders();
     }
+
 
     /**
      * Fetch and display cars for the given user_id.
@@ -164,9 +183,36 @@ public class DashboardController {
 
 
     private void loadReminders() {
-        // Example reminders; replace with actual logic to fetch reminders
-        reminders.addAll("Oil change due soon", "Insurance expiring in 10 days");
+        reminders.clear();
+
+        try {
+            CarDAO carDAO = new CarDAO();
+            MaintenanceDAO maintenanceDAO = new MaintenanceDAO();
+
+            // Fetch car-related reminders
+            List<String> carReminders = carDAO.fetchUpcomingCarReminders(loggedInUserId);
+            System.out.println("Car reminders: " + carReminders);
+
+            // Fetch oil change reminders
+            List<String> oilChangeReminders = maintenanceDAO.fetchOilChangeReminders(loggedInUserId);
+            System.out.println("Oil change reminders: " + oilChangeReminders);
+
+            // Add all reminders to the ObservableList
+            reminders.addAll(carReminders);
+            reminders.addAll(oilChangeReminders);
+            System.out.println("All reminders added: " + reminders);
+
+            if (reminders.isEmpty()) {
+                reminders.add("No upcoming reminders at this time.");
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error loading reminders: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
+
+
 
     private void editCar(Car car) {
         try {
@@ -226,9 +272,28 @@ public class DashboardController {
     }
 
     @FXML
-    private void navigateToMaintenance() {
-        System.out.println("Navigating to Maintenance Page");
+    private void navigateToMaintenanceRecords() {
+        try {
+            // Load the Maintenance Records page
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/MaintenanceRecordsPage.fxml"));
+            Parent root = loader.load();
+
+            // Pass the loggedInUserId to MaintenanceRecordsController
+            MaintenanceRecordsController maintenanceRecordsController = loader.getController();
+            maintenanceRecordsController.setLoggedInUserId(loggedInUserId);
+
+            // Set the new scene
+            Stage stage = (Stage) profileImage.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Maintenance Records");
+            stage.show();
+
+        } catch (Exception e) {
+            System.err.println("Error navigating to Maintenance Records page: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
+
 
     @FXML
     private void navigateToInsurance() {

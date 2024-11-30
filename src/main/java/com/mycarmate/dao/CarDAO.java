@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,5 +105,138 @@ public class CarDAO {
             System.out.println("Car added successfully.");
         }
     }
+    public List<String> fetchCarNamesForUser(int userId) throws Exception {
+        String query = "SELECT DISTINCT make || ' ' || model || ' (' || year || ')' AS car_name FROM cars WHERE user_id = ?";
+        List<String> carNames = new ArrayList<>();
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, userId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    carNames.add(rs.getString("car_name"));
+                }
+            }
+        }
+
+        return carNames;
+    }
+
+    public int fetchCarIdByName(String carName, int userId) throws Exception {
+        String query = "SELECT car_id FROM cars WHERE user_id = ? AND CONCAT(make, ' ', model, ' (', year, ')') = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, userId);
+            stmt.setString(2, carName);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("car_id");
+                } else {
+                    throw new Exception("Car ID not found for car name: " + carName);
+                }
+            }
+        }
+    }
+    public void updateInspectionDate(int carId, LocalDate newInspectionDate) throws Exception {
+        String query = "UPDATE cars SET inspection_date = ? WHERE car_id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setDate(1, java.sql.Date.valueOf(newInspectionDate));
+            stmt.setInt(2, carId);
+            stmt.executeUpdate();
+            System.out.println("Updated inspection_date for car ID: " + carId);
+        } catch (Exception e) {
+            System.err.println("Error updating inspection_date: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    public void updateRegistrationDate(int carId, LocalDate newRegistrationDate) throws Exception {
+        String query = "UPDATE cars SET registration_exp_date = ? WHERE car_id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setDate(1, java.sql.Date.valueOf(newRegistrationDate));
+            stmt.setInt(2, carId);
+            stmt.executeUpdate();
+            System.out.println("Updated registration_exp_date for car ID: " + carId);
+        } catch (Exception e) {
+            System.err.println("Error updating registration_exp_date: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    public int fetchCarMileage(int carId) throws Exception {
+        String query = "SELECT mileage FROM cars WHERE car_id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, carId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("mileage");
+                } else {
+                    throw new Exception("Car not found for car_id: " + carId);
+                }
+            }
+        }
+    }
+
+    public void updateCarMileage(int carId, int newMileage) throws Exception {
+        String query = "UPDATE cars SET mileage = ? WHERE car_id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, newMileage);
+            stmt.setInt(2, carId);
+            int rowsUpdated = stmt.executeUpdate();
+
+            if (rowsUpdated == 0) {
+                throw new Exception("Failed to update mileage for car_id: " + carId);
+            }
+        }
+    }
+
+    public List<String> fetchUpcomingCarReminders(int userId) throws Exception {
+        String query = "SELECT make, model, year, registration_exp_date, inspection_date FROM cars WHERE user_id = ?";
+        List<String> reminders = new ArrayList<>();
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, userId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    String make = rs.getString("make");
+                    String model = rs.getString("model");
+                    int year = rs.getInt("year");
+
+                    // Handle registration expiration date
+                    java.sql.Date registrationExpDate = rs.getDate("registration_exp_date");
+                    if (registrationExpDate != null) {
+                        LocalDate regDate = registrationExpDate.toLocalDate();
+                        if (regDate.isBefore(LocalDate.now().plusMonths(1))) {
+                            reminders.add("Registration for " + make + " " + model + " (" + year + ") is expiring soon!");
+                        }
+                    }
+
+                    // Handle inspection expiration date
+                    java.sql.Date inspectionDate = rs.getDate("inspection_date");
+                    if (inspectionDate != null) {
+                        LocalDate inspDate = inspectionDate.toLocalDate();
+                        if (inspDate.isBefore(LocalDate.now().plusMonths(1))) {
+                            reminders.add("Inspection for " + make + " " + model + " (" + year + ") is expiring soon!");
+                        }
+                    }
+                }
+            }
+        }
+
+        return reminders;
+    }
+
+
+
 
 }
