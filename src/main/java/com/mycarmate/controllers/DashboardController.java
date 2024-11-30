@@ -239,10 +239,78 @@ public class DashboardController {
         System.out.println("Deleted car: " + car);
     }
 
+
+    private void loadUserData() {
+        try {
+            UserDAO userDAO = new UserDAO();
+            Map<String, String> userDetails = userDAO.fetchUserDetailsById(loggedInUserId);
+
+            if (userDetails != null) {
+                // Update the username
+                String username = userDetails.get("username");
+                welcomeMessage.setText("Welcome " + (username != null ? username : "User") + " to your Dashboard!");
+
+                // Update the profile picture
+                String profilePictureUrl = userDetails.get("profile_picture");
+                if (profilePictureUrl != null && !profilePictureUrl.isEmpty()) {
+                    profileImage.setImage(new Image(profilePictureUrl));
+                } else {
+                    profileImage.setImage(new Image("/assets/account_circle.png")); // Default image
+                }
+            } else {
+                System.err.println("Failed to load user data. User details not found.");
+            }
+        } catch (Exception e) {
+            System.err.println("Error loading user data: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+
     @FXML
     private void openProfileModal() {
-        System.out.println("Profile Modal Opened");
+        try {
+            // Load the FXML file for the Edit Profile popup
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/EditProfilePopup.fxml"));
+            Parent root = loader.load();
+
+            // Get the controller for the popup
+            EditProfileController controller = loader.getController();
+
+            // Fetch user data directly from the database
+            UserDAO userDAO = new UserDAO();
+            Map<String, String> userDetails = userDAO.fetchUserDetailsById(loggedInUserId);
+
+            if (userDetails != null) {
+                // Pass the user details to the controller
+                controller.setLoggedInUserDetails(
+                        loggedInUserId,
+                        userDetails.get("first_name"),
+                        userDetails.get("last_name"),
+                        userDetails.get("username"),
+                        userDetails.get("profile_picture")
+                );
+            } else {
+                System.err.println("No user found with ID: " + loggedInUserId);
+            }
+
+            // Display the popup
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Edit Profile");
+            popupStage.setScene(new Scene(root));
+            popupStage.initModality(Modality.APPLICATION_MODAL); // Makes the popup modal
+            popupStage.showAndWait();
+
+            // Refresh the dashboard with updated user data
+            loadUserData();
+
+        } catch (Exception e) {
+            System.err.println("Error opening Edit Profile popup: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
+
+
 
     @FXML
     private void openAddCarPopup() {

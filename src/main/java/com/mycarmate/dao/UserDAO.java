@@ -62,4 +62,49 @@ public class UserDAO {
         return userProfile;
     }
 
+    public Map<String, String> fetchUserDetailsById(int userId) throws Exception {
+        String query = "SELECT first_name, last_name, username, profile_picture FROM users WHERE user_id = ?";
+        Map<String, String> userDetails = new HashMap<>();
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, userId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    userDetails.put("first_name", rs.getString("first_name"));
+                    userDetails.put("last_name", rs.getString("last_name"));
+                    userDetails.put("username", rs.getString("username"));
+                    userDetails.put("profile_picture", rs.getString("profile_picture"));
+                }
+            }
+        }
+
+        return userDetails.isEmpty() ? null : userDetails;
+    }
+
+
+
+    public void updateUserProfile(int userId, String firstName, String lastName, String username, String profilePicture) throws Exception {
+        String query = "UPDATE users SET first_name = ?, last_name = ?, username = ?, profile_picture = ? WHERE user_id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, firstName);
+            stmt.setString(2, lastName);
+            stmt.setString(3, username);
+            stmt.setString(4, profilePicture);
+            stmt.setInt(5, userId);
+
+            int rowsUpdated = stmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("User profile updated successfully.");
+            } else {
+                throw new Exception("Failed to update user profile.");
+            }
+        }
+    }
+
 }
