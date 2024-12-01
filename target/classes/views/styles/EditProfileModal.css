@@ -29,7 +29,7 @@
 }
 
 /* Form Fields */
-.text-field, .combo-box {
+.text-field {
     -fx-font-size: 14px;
     -fx-padding: 8;
     -fx-border-color: #ccc;
@@ -38,7 +38,7 @@
     -fx-background-radius: 5;
 }
 
-.text-field:focused, .combo-box:focused {
+.text-field:focused {
     -fx-border-color: #3498db; /* Blue border when focused */
     -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.5), 5, 0, 0, 0);
 }
@@ -55,7 +55,7 @@
     -fx-text-fill: #34495e; /* Darker gray-blue for titles */
 }
 
-/* HBox Spacing */
+/* HBox Styling */
 .hbox {
     -fx-spacing: 10;
     -fx-padding: 10 0;
@@ -68,6 +68,6 @@
     -fx-background-color: #f8f8f8;
     -fx-border-color: #ddd;
     -fx-border-width: 1;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
 }

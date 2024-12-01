@@ -10,12 +10,12 @@
 
 /* Save Button */
 .modal-save-button {
-    -fx-background-color: #27ae60; /* Green */
+    -fx-background-color: #3498db; /* Blue */
     -fx-text-fill: white;
 }
 
 .modal-save-button:hover {
-    -fx-background-color: #1e8449; /* Darker green on hover */
+    -fx-background-color: #2980b9; /* Darker blue on hover */
 }
 
 /* Cancel Button */
