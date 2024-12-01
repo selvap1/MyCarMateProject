@@ -1,0 +1,81 @@
+/* General Modal Styling */
+.modal-container {
+    -fx-background-color: #f8f8f8; /* Light gray background */
+    -fx-padding: 20px;
+    -fx-spacing: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-color: #ddd; /* Light gray border */
+    -fx-border-width: 1px;
+}
+
+/* Title Styling */
+.modal-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50; /* Dark gray-blue */
+    -fx-padding: 10px 0;
+    -fx-alignment: center;
+}
+
+/* Form Field Styling */
+.text-field, .combo-box {
+    -fx-font-size: 14px;
+    -fx-padding: 8px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-color: #bbb; /* Neutral border color */
+    -fx-background-color: #ffffff; /* White background */
+}
+
+.text-field:focused, .combo-box:focused {
+    -fx-border-color: #3498db; /* Blue border when focused */
+    -fx-border-width: 2px;
+}
+
+/* HBox for Buttons */
+.button-container {
+    -fx-spacing: 10px;
+    -fx-alignment: center;
+    -fx-padding: 10px 0 0 0;
+}
+
+/* Save Button */
+.modal-save-button {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-color: #3498db; /* Blue background */
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 5, 0, 2, 2);
+}
+
+.modal-save-button:hover {
+    -fx-background-color: #2980b9; /* Darker blue on hover */
+}
+
+/* Cancel Button */
+.modal-cancel-button {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-color: #e74c3c; /* Red background */
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 5, 0, 2, 2);
+}
+
+.modal-cancel-button:hover {
+    -fx-background-color: #c0392b; /* Darker red on hover */
+}
+
+/* Error Label Styling */
+.error-label {
+    -fx-text-fill: #e74c3c; /* Red for errors */
+    -fx-font-size: 12px;
+    -fx-padding: 5px 0;
+}

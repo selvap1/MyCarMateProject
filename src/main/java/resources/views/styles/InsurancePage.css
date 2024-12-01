@@ -1,0 +1,130 @@
+/* General Page Styles */
+.page-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-padding: 10;
+}
+
+.dropdown {
+    -fx-border-color: #3498db; /* Blue border */
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-background-color: white;
+    -fx-padding: 5;
+}
+
+/* Button Styling */
+.add-button {
+    -fx-font-size: 14px;
+    -fx-padding: 10 20;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-background-color: #27ae60; /* Green */
+    -fx-text-fill: white;
+}
+
+.add-button:hover {
+    -fx-background-color: #1e8449; /* Darker green */
+}
+
+/* TableView Styling */
+.insurance-table {
+    -fx-border-color: #ddd;
+    -fx-background-color: white;
+    -fx-border-radius: 5;
+    -fx-padding: 5;
+}
+
+.insurance-table .column-header {
+    -fx-background-color: #3498db; /* Header background */
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.insurance-table .table-row-cell {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+.insurance-table .table-row-cell:odd {
+    -fx-background-color: #f9f9f9; /* Light gray for odd rows */
+}
+
+.insurance-table .table-row-cell:hover {
+    -fx-background-color: #d6eaf8; /* Light blue hover */
+}
+
+.insurance-table .table-row-cell:selected {
+    -fx-background-color: #3498db; /* Blue highlight */
+    -fx-text-fill: white;
+}
+
+.insurance-table .table-row-cell:selected:hover {
+    -fx-background-color: #2980b9; /* Darker blue on hover */
+}
+
+/* Labels and Inputs */
+.label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #2c3e50;
+}
+
+.text-field {
+    -fx-font-size: 14px;
+    -fx-padding: 5;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-background-color: white;
+}
+
+/* Edit Button Style */
+.edit-button {
+    -fx-background-color: #3498db; /* Blue */
+    -fx-text-fill: white; /* White text */
+    -fx-font-size: 14px;
+    -fx-padding: 5 10;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 5, 0, 2, 2);
+}
+
+.edit-button:hover {
+    -fx-background-color: #2980b9; /* Darker blue on hover */
+}
+
+/* Delete Button Style */
+.delete-button {
+    -fx-background-color: #e74c3c; /* Red */
+    -fx-text-fill: white; /* White text */
+    -fx-font-size: 14px;
+    -fx-padding: 5 10;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 5, 0, 2, 2);
+}
+
+.delete-button:hover {
+    -fx-background-color: #c0392b; /* Darker red on hover */
+}
+
+/* Back Button Style */
+.back-button {
+    -fx-background-color: #3498db; /* Blue */
+    -fx-text-fill: white; /* White text */
+    -fx-font-size: 14px;
+    -fx-padding: 5 15;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 5, 0, 2, 2);
+}
+
+.back-button:hover {
+    -fx-background-color: #2980b9; /* Darker blue on hover */
+}
+

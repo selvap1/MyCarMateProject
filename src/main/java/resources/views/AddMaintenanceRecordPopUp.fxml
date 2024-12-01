@@ -1,17 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
-<VBox spacing="10" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml"
+
+<?import java.net.URL?>
+<VBox spacing="15" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.mycarmate.controllers.AddMaintenanceRecordController"
       style="-fx-padding: 20; -fx-background-color: #f8f8f8;">
-    <Label text="Add Maintenance Record" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+    <stylesheets>
+        <URL value="@/styles/AddMaintenanceRecordModal.css" />
+    </stylesheets>
 
-    <DatePicker fx:id="dateOfServicePicker" promptText="Date of Service" />
+    <!-- Title -->
+    <Label text="Add Maintenance Record" styleClass="modal-title" />
 
-    <Label text="Service Type" />
+    <!-- Date of Service -->
+    <Label text="Date of Service:" />
+    <DatePicker fx:id="dateOfServicePicker" promptText="Select Date of Service" />
+
+    <!-- Service Type -->
+    <Label text="Service Type:" />
     <ComboBox fx:id="serviceTypeDropdown" promptText="Select Service Type">
         <items>
             <FXCollections fx:factory="observableArrayList">
@@ -22,12 +31,21 @@
             </FXCollections>
         </items>
     </ComboBox>
-    <TextField fx:id="customServiceTypeField" promptText="Custom Service Type (Only if 'Other')" visible="false" />
 
-    <TextField fx:id="costField" promptText="Cost" />
-    <TextField fx:id="mileageField" promptText="Mileage" />
+    <!-- Custom Service Type -->
+    <Label text="Custom Service Type:" visible="false" fx:id="customServiceTypeLabel" />
+    <TextField fx:id="customServiceTypeField" promptText="Enter Custom Service Type (if 'Other')" visible="false" />
 
-    <HBox spacing="10">
+    <!-- Cost -->
+    <Label text="Cost:" />
+    <TextField fx:id="costField" promptText="Enter Cost" />
+
+    <!-- Mileage -->
+    <Label text="Mileage:" />
+    <TextField fx:id="mileageField" promptText="Enter Mileage" />
+
+    <!-- Buttons -->
+    <HBox spacing="10" styleClass="modal-buttons-container">
         <Button text="Save" onAction="#handleSave" styleClass="modal-save-button" />
         <Button text="Cancel" onAction="#handleCancel" styleClass="modal-cancel-button" />
     </HBox>

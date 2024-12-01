@@ -12,20 +12,32 @@
         <URL value="@/styles/EditInsuranceModal.css" />
     </stylesheets>
 
+    <!-- Title -->
     <Label text="Edit Insurance Record" styleClass="modal-title" />
 
-    <TextField fx:id="providerField" promptText="Provider Name" styleClass="modal-textfield" />
-    <TextField fx:id="policyField" promptText="Policy Number" styleClass="modal-textfield" />
-    <HBox spacing="10">
-        <ComboBox fx:id="startMonthPicker" promptText="Start Month" styleClass="modal-combobox" />
-        <ComboBox fx:id="startYearPicker" promptText="Start Year" styleClass="modal-combobox" />
-    </HBox>
-    <HBox spacing="10">
-        <ComboBox fx:id="endMonthPicker" promptText="End Month" styleClass="modal-combobox" />
-        <ComboBox fx:id="endYearPicker" promptText="End Year" styleClass="modal-combobox" />
-    </HBox>
-    <TextField fx:id="coverageField" promptText="Coverage Amount" styleClass="modal-textfield" />
+    <!-- Form Fields with Labels -->
+    <Label text="Provider Name:" />
+    <TextField fx:id="providerField" promptText="Enter Provider Name" styleClass="modal-textfield" />
 
+    <Label text="Policy Number:" />
+    <TextField fx:id="policyField" promptText="Enter Policy Number" styleClass="modal-textfield" />
+
+    <Label text="Start Date:" />
+    <HBox spacing="10">
+        <ComboBox fx:id="startMonthPicker" promptText="Select Start Month" styleClass="modal-combobox" />
+        <ComboBox fx:id="startYearPicker" promptText="Select Start Year" styleClass="modal-combobox" />
+    </HBox>
+
+    <Label text="End Date:" />
+    <HBox spacing="10">
+        <ComboBox fx:id="endMonthPicker" promptText="Select End Month" styleClass="modal-combobox" />
+        <ComboBox fx:id="endYearPicker" promptText="Select End Year" styleClass="modal-combobox" />
+    </HBox>
+
+    <Label text="Coverage Amount:" />
+    <TextField fx:id="coverageField" promptText="Enter Coverage Amount" styleClass="modal-textfield" />
+
+    <!-- Buttons -->
     <HBox spacing="10" styleClass="modal-buttons-container">
         <Button text="Save" onAction="#handleSave" styleClass="modal-save-button" />
         <Button text="Cancel" onAction="#handleCancel" styleClass="modal-cancel-button" />

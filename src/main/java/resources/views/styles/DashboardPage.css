@@ -40,25 +40,9 @@
     -fx-background-color: #ffffff; /* White for even rows */
 }
 
-/* Hover Effect */
+/* Hover Effect for Table Rows */
 .table-row-cell:hover {
-    -fx-background-color: #d0e8fc; /* Light blue on hover */
-}
-
-/* Selected Row Styling */
-.table-row-cell:selected {
-    -fx-background-color: #3498db; /* Blue for selected row */
-    -fx-text-fill: white; /* White text for contrast */
-}
-
-.table-row-cell:selected:hover {
-    -fx-background-color: #2980b9; /* Darker blue on hover while selected */
-}
-
-/* Selected Cell Highlight */
-.table-cell:selected {
-    -fx-background-color: #3498db; /* Blue for selected cell */
-    -fx-text-fill: white; /* White text for selected cell */
+    -fx-background-color: #f1f1f1; /* Slightly darker gray on hover */
 }
 
 /* Align action buttons side-by-side */

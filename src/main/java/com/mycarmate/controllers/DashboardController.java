@@ -217,31 +217,81 @@ public class DashboardController {
         }
     }
 
-
     private void editCar(Car car) {
         try {
+            if (car == null) {
+                throw new IllegalArgumentException("Car object is null");
+            }
+
             // Fetch full car details using the CarDAO
             CarDAO carDAO = new CarDAO();
-            Car fullCarDetails = carDAO.fetchCarById(car.getCarId());
+            Car fullCarDetails = carDAO.fetchCarById(Integer.parseInt(car.getCarId())); // Convert carId to int
 
             // Open the edit modal and pass the full car details
             openEditModal(fullCarDetails);
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid car ID format: " + e.getMessage());
+            e.printStackTrace();
         } catch (Exception e) {
             System.err.println("Error fetching full car details: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
+
     private void openEditModal(Car car) {
-        // Implement the logic to open the modal and populate it with the car details
-        System.out.println("Editing car: " + car);
+        try {
+            if (car == null) {
+                throw new IllegalArgumentException("Car object is null");
+            }
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/EditCarModal.fxml"));
+            Parent root = loader.load();
+
+            // Get controller and pass car details
+            EditCarController controller = loader.getController();
+            controller.setCarDetails(car); // Ensure this method correctly assigns all fields
+
+            // Display the modal
+            Stage stage = new Stage();
+            stage.setTitle("Edit Car");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+
+            // Optionally reload cars after editing
+            fetchCarsForUser(loggedInUserId);
+
+        } catch (Exception e) {
+            System.err.println("Error opening edit modal: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
+
     private void deleteCar(Car car) {
-        // Delete car logic
-        cars.remove(car);
-        System.out.println("Deleted car: " + car);
+        try {
+            CarDAO carDAO = new CarDAO();
+
+            // Convert carId from String to int
+            int carId = Integer.parseInt(car.getCarId());
+
+            // Call the DAO to delete the car
+            carDAO.deleteCar(carId);
+
+            // Remove the car from the ObservableList
+            cars.remove(car);
+            System.out.println("Deleted car: " + car);
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid car ID format: " + car.getCarId());
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Error deleting car: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
+
+
 
 
     private void loadUserData() {
@@ -415,5 +465,14 @@ public class DashboardController {
             e.printStackTrace();
         }
     }
+
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
 
 }

@@ -12,29 +12,37 @@
         <URL value="@styles/AddCarPopUp.css" />
     </stylesheets>
 
-
     <!-- Title -->
     <Label text="Add New Car" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
 
-    <!-- Form Fields -->
-    <TextField fx:id="makeField" promptText="Make" />
-    <TextField fx:id="modelField" promptText="Model" />
-    <TextField fx:id="yearField" promptText="Year" />
-    <TextField fx:id="vinField" promptText="VIN" />
-    <TextField fx:id="mileageField" promptText="Mileage" />
+    <!-- Form Fields with Labels -->
+    <Label text="Make:" />
+    <TextField fx:id="makeField" promptText="Enter Make" />
+
+    <Label text="Model:" />
+    <TextField fx:id="modelField" promptText="Enter Model" />
+
+    <Label text="Year:" />
+    <TextField fx:id="yearField" promptText="Enter Year" />
+
+    <Label text="VIN:" />
+    <TextField fx:id="vinField" promptText="Enter VIN" />
+
+    <Label text="Mileage:" />
+    <TextField fx:id="mileageField" promptText="Enter Mileage" />
 
     <!-- Registration Date -->
     <Label text="Registration Expiration Date:" style="-fx-font-size: 14px;" />
     <HBox spacing="10">
-        <ComboBox fx:id="registrationMonthPicker" promptText="Month" />
-        <ComboBox fx:id="registrationYearPicker" promptText="Year" />
+        <ComboBox fx:id="registrationMonthPicker" promptText="Select Month" />
+        <ComboBox fx:id="registrationYearPicker" promptText="Select Year" />
     </HBox>
 
     <!-- Inspection Date -->
     <Label text="Inspection Expiration Date:" style="-fx-font-size: 14px;" />
     <HBox spacing="10">
-        <ComboBox fx:id="inspectionMonthPicker" promptText="Month" />
-        <ComboBox fx:id="inspectionYearPicker" promptText="Year" />
+        <ComboBox fx:id="inspectionMonthPicker" promptText="Select Month" />
+        <ComboBox fx:id="inspectionYearPicker" promptText="Select Year" />
     </HBox>
 
     <!-- Buttons -->

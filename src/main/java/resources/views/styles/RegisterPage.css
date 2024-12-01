@@ -1,0 +1,33 @@
+/* Apply general styles to the VBox */
+.root {
+    -fx-background-color: #f4f4f4;
+    -fx-padding: 20;
+    -fx-spacing: 10;
+    -fx-alignment: center;
+}
+
+/* Style for the Register button */
+#registerButton {
+    -fx-background-color: green;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+}
+
+#registerButton:hover {
+    -fx-background-color: darkgreen;
+}
+
+/* Style for the Back to Login button */
+#goToLoginButton {
+    -fx-background-color: lightgray;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20;
+}
+
+#goToLoginButton:hover {
+    -fx-background-color: gray;
+    -fx-text-fill: white;
+}
