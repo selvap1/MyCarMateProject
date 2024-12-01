@@ -3,63 +3,67 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import java.net.URL?>
 <VBox xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.mycarmate.controllers.InsurancePageController"
       spacing="20"
       style="-fx-padding: 20; -fx-background-color: #f8f8f8;">
+    <stylesheets>
+        <URL value="@/styles/InsurancePage.css" />
+    </stylesheets>
+
 
     <!-- Input Section -->
-    <VBox spacing="10" alignment="CENTER_LEFT">
+    <VBox spacing="15" style="-fx-padding: 10; -fx-border-color: #ddd; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5;">
         <Label text="Add Insurance Record" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
 
         <!-- Car Selector -->
-        <HBox spacing="10">
+        <HBox spacing="10" alignment="CENTER_LEFT">
             <Label text="Select Car:" />
-            <ComboBox fx:id="carSelector" prefWidth="200" />
+            <ComboBox fx:id="carSelector" prefWidth="250" styleClass="dropdown" />
         </HBox>
 
         <!-- Provider Name -->
-        <HBox spacing="10">
+        <HBox spacing="10" alignment="CENTER_LEFT">
             <Label text="Provider Name:" />
-            <TextField fx:id="providerNameField" promptText="Enter Provider Name" prefWidth="200" />
+            <TextField fx:id="providerNameField" promptText="Enter Provider Name" prefWidth="250" />
         </HBox>
 
         <!-- Policy Number -->
-        <HBox spacing="10">
+        <HBox spacing="10" alignment="CENTER_LEFT">
             <Label text="Policy Number:" />
-            <TextField fx:id="policyNumberField" promptText="Enter Policy Number" prefWidth="200" />
+            <TextField fx:id="policyNumberField" promptText="Enter Policy Number" prefWidth="250" />
         </HBox>
 
         <!-- Start Date -->
-        <HBox spacing="10">
+        <HBox spacing="10" alignment="CENTER_LEFT">
             <Label text="Start Date:" />
-            <ComboBox fx:id="startMonthPicker" promptText="Month" prefWidth="100" />
-            <ComboBox fx:id="startYearPicker" promptText="Year" prefWidth="100" />
+            <ComboBox fx:id="startMonthPicker" promptText="Month" prefWidth="120" />
+            <ComboBox fx:id="startYearPicker" promptText="Year" prefWidth="120" />
         </HBox>
 
         <!-- End Date -->
-        <HBox spacing="10">
+        <HBox spacing="10" alignment="CENTER_LEFT">
             <Label text="End Date:" />
-            <ComboBox fx:id="endMonthPicker" promptText="Month" prefWidth="100" />
-            <ComboBox fx:id="endYearPicker" promptText="Year" prefWidth="100" />
+            <ComboBox fx:id="endMonthPicker" promptText="Month" prefWidth="120" />
+            <ComboBox fx:id="endYearPicker" promptText="Year" prefWidth="120" />
         </HBox>
 
         <!-- Coverage Amount -->
-        <HBox spacing="10">
+        <HBox spacing="10" alignment="CENTER_LEFT">
             <Label text="Coverage Amount:" />
-            <TextField fx:id="coverageAmountField" promptText="Enter Coverage Amount" prefWidth="200" />
+            <TextField fx:id="coverageAmountField" promptText="Enter Coverage Amount" prefWidth="250" />
         </HBox>
 
         <!-- Add Insurance Button -->
-        <Button text="Add Insurance" onAction="#handleAddInsurance" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-padding: 10;" />
+        <Button text="Add Insurance" onAction="#handleAddInsurance" styleClass="add-button" />
     </VBox>
 
     <!-- Insurance Records Table -->
-    <VBox spacing="10">
+    <VBox spacing="15">
         <Label text="Insurance Records" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
-
-        <TableView fx:id="insuranceTable" prefHeight="300" prefWidth="800">
+        <TableView fx:id="insuranceTable" prefHeight="300" prefWidth="800" styleClass="insurance-table">
             <columns>
                 <TableColumn fx:id="carColumn" text="Car" prefWidth="150" />
                 <TableColumn fx:id="providerNameColumn" text="Provider Name" prefWidth="150" />

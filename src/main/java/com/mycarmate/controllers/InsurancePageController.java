@@ -15,6 +15,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
@@ -34,7 +35,7 @@ public class InsurancePageController {
     @FXML
     private TableColumn<InsuranceRecord, String> carColumn, providerNameColumn, policyNumberColumn, startDateColumn, endDateColumn;
     @FXML
-    private TableColumn<InsuranceRecord, Double> coverageAmountColumn;
+    private TableColumn<InsuranceRecord, String> coverageAmountColumn;
     @FXML
     private TableColumn<InsuranceRecord, Void> actionsColumn;
 
@@ -54,7 +55,14 @@ public class InsurancePageController {
         policyNumberColumn.setCellValueFactory(cellData -> cellData.getValue().policyNumberProperty());
         startDateColumn.setCellValueFactory(cellData -> cellData.getValue().startDateProperty());
         endDateColumn.setCellValueFactory(cellData -> cellData.getValue().endDateProperty());
-        coverageAmountColumn.setCellValueFactory(cellData -> cellData.getValue().coverageAmountProperty().asObject());
+        coverageAmountColumn.setCellValueFactory(cellData -> {
+            double amount = cellData.getValue().getCoverageAmount();
+            String formattedAmount = String.format("%,.2f", amount);
+            return new SimpleStringProperty(formattedAmount);
+        });
+
+        insuranceTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
 
         actionsColumn.setCellFactory(col -> {
             TableCell<InsuranceRecord, Void> cell = new TableCell<>() {
@@ -79,7 +87,36 @@ public class InsurancePageController {
             return cell;
         });
 
+
+        // Populate pickers
+        populateMonthPicker(startMonthPicker);
+        populateYearPicker(startYearPicker);
+        populateMonthPicker(endMonthPicker);
+        populateYearPicker(endYearPicker);
+
+        // Add focus listener to format coverage amount
+        coverageAmountField.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal) { // On losing focus
+                formatCoverageField();
+            }
+        });
+
         insuranceTable.setItems(insuranceRecords);
+    }
+
+
+    private void populateMonthPicker(ComboBox<String> monthPicker) {
+        monthPicker.getItems().addAll(
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+        );
+    }
+
+    private void populateYearPicker(ComboBox<Integer> yearPicker) {
+        int currentYear = LocalDate.now().getYear();
+        for (int i = currentYear - 20; i <= currentYear + 20; i++) {
+            yearPicker.getItems().add(i);
+        }
     }
 
     private void handleEdit(InsuranceRecord record) {
@@ -140,7 +177,7 @@ public class InsurancePageController {
             int startYear = startYearPicker.getValue();
             String endMonth = endMonthPicker.getValue();
             int endYear = endYearPicker.getValue();
-            double coverageAmount = Double.parseDouble(coverageAmountField.getText());
+            double coverageAmount = parseCoverageAmount(coverageAmountField.getText());
 
             if (carName == null || providerName.isEmpty() || policyNumber.isEmpty() ||
                     startMonth == null || endMonth == null) {
@@ -164,6 +201,27 @@ public class InsurancePageController {
         }
     }
 
+    private double parseCoverageAmount(String coverageText) throws NumberFormatException {
+        return Double.parseDouble(coverageText.replace(",", ""));
+    }
+
+    private void formatCoverageField() {
+        try {
+            String text = coverageAmountField.getText();
+            if (!text.isEmpty()) {
+                double value = parseCoverageAmount(text);
+                coverageAmountField.setText(formatCoverageAmount(value));
+            }
+        } catch (NumberFormatException e) {
+            showAlert("Invalid Input", "Please enter a valid number for the coverage amount.");
+        }
+    }
+
+    private String formatCoverageAmount(double coverageAmount) {
+        DecimalFormat formatter = new DecimalFormat("#,##0.00");
+        return formatter.format(coverageAmount);
+    }
+
     private String formatDateToFirstDay(String month, int year) {
         Month parsedMonth = Month.valueOf(month.toUpperCase());
         LocalDate date = LocalDate.of(year, parsedMonth.getValue(), 1);
@@ -184,7 +242,6 @@ public class InsurancePageController {
             e.printStackTrace();
         }
     }
-
 
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
