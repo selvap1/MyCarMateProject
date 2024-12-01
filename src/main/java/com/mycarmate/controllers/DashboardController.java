@@ -426,13 +426,26 @@ public class DashboardController {
             controller.setLoggedInUserId(loggedInUserId);
 
             Stage stage = (Stage) profileImage.getScene().getWindow();
-            stage.setScene(new Scene(root));
+            Scene newScene = new Scene(root);
+            stage.setTitle("View Insurance");
+
+            // Optional: Set minimum width and height for the stage
+            stage.setMinWidth(800); // Adjust these values as needed
+            stage.setMinHeight(600);
+
+            stage.setScene(newScene);
+
+            // Ensure the stage resizes to fit the scene
+            stage.sizeToScene();
+
+            stage.centerOnScreen(); // Optional: Center the stage
             stage.show();
         } catch (Exception e) {
             System.err.println("Error navigating to InsurancePage: " + e.getMessage());
             e.printStackTrace();
         }
     }
+
 
     @FXML
     private void handleLogout() {

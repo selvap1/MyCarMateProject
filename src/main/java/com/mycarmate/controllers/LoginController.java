@@ -10,7 +10,9 @@ import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 
+import javax.swing.text.html.ImageView;
 import java.io.IOException;
 
 public class LoginController {
@@ -30,12 +32,20 @@ public class LoginController {
     @FXML
     private Label errorLabel;
 
+    @FXML
+    private javafx.scene.image.ImageView logoImage;
+
+
 
     private FirebaseAuthHandler firebaseAuthHandler;
 
     @FXML
     public void initialize() {
         firebaseAuthHandler = new FirebaseAuthHandler(); // Initialize FirebaseAuthHandler
+
+        // Set the logo image
+        Image logo = new Image(getClass().getResourceAsStream("/assets/mycarmate-high-resolution-logo-transparent.png"));
+        logoImage.setImage(logo);
     }
 
 
@@ -63,7 +73,20 @@ public class LoginController {
                 System.out.println("Logged-in user ID stored in SessionManager: " + userId);
 
                 // Navigate to the dashboard
-                loadDashboardScene(firebaseUid);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/DashboardPage.fxml"));
+                Parent dashboardRoot = loader.load();
+
+                // Pass the Firebase UID to the DashboardController
+                DashboardController dashboardController = loader.getController();
+                dashboardController.initializeDashboard(firebaseUid);
+
+                Stage primaryStage = (Stage) emailField.getScene().getWindow();
+                primaryStage.setScene(new Scene(dashboardRoot));
+                primaryStage.setTitle("Dashboard");
+
+                // Center the window on the screen
+                primaryStage.centerOnScreen();
+
             } else {
                 errorLabel.setText("Invalid email or password.");
             }
@@ -73,6 +96,7 @@ public class LoginController {
             errorLabel.setText("An error occurred. Please try again.");
         }
     }
+
 
 
 
@@ -119,4 +143,33 @@ public class LoginController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void handleForgotPassword() {
+        try {
+            String email = emailField.getText(); // Retrieve the email from the email input field
+
+            if (email.isEmpty()) {
+                errorLabel.setText("Please enter your email to reset your password.");
+                return;
+            }
+
+            // Call the custom FirebaseAuthHandler method
+            FirebaseAuthHandler authHandler = new FirebaseAuthHandler();
+            authHandler.sendPasswordResetEmail(email);
+
+            // Provide feedback to the user
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Password Reset");
+            alert.setHeaderText(null);
+            alert.setContentText("A password reset link has been sent to " + email + ".");
+            alert.showAndWait();
+
+        } catch (Exception e) {
+            System.err.println("Error sending password reset email: " + e.getMessage());
+            errorLabel.setText("Failed to send reset email. Please try again.");
+            e.printStackTrace();
+        }
+    }
+
 }

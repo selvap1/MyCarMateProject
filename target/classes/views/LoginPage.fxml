@@ -4,9 +4,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
 
+<?import java.net.URL?>
 <VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" alignment="CENTER" spacing="20" styleClass="login-container" fx:controller="com.mycarmate.controllers.LoginController">
+    <stylesheets>
+        <URL value="@/styles/LoginPage.css" />
+    </stylesheets>
     <!-- Logo -->
-    <ImageView fx:id="logoImageView" fitWidth="200" fitHeight="150" />
+    <ImageView fx:id="logoImage" styleClass="logo" fitWidth="200" preserveRatio="true" />
 
     <!-- Title -->
     <Label text="Log In" styleClass="login-title" />
@@ -24,8 +28,8 @@
 
     <!-- Links -->
     <VBox spacing="5" alignment="CENTER" styleClass="login-links">
-        <Label text="Forgot Password?" styleClass="forgot-password" />
-        <Label text="Not a member?" styleClass="not-member" />
-        <Button fx:id="signUpButton" text="Sign Up" onAction="#handleSignUp" />
+        <Button text="Forgot Password?" onAction="#handleForgotPassword" styleClass="forgot-password-button" />
+        <Label text="Not a member?" styleClass="not-member-label" />
+        <Button fx:id="signUpButton" text="Sign Up" onAction="#handleSignUp" styleClass="signup-button" />
     </VBox>
 </VBox>

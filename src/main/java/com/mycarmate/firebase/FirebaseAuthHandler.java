@@ -11,6 +11,12 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.auth.UserRecord;
 import com.google.firebase.cloud.FirestoreClient;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.entity.StringEntity;
+import org.json.JSONObject;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -130,6 +136,34 @@ public class FirebaseAuthHandler {
         // Return the user's Firebase UID
         return userRecord.getUid();
     }
+
+    public void sendPasswordResetEmail(String email) throws Exception {
+        String firebaseApiKey = "AIzaSyCB5NB0s_Xuuu8UKl1haekjBJrFXL0lgMg";
+        String resetUrl = "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=" + firebaseApiKey;
+
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+            HttpPost httpPost = new HttpPost(resetUrl);
+
+            // Create JSON payload
+            JSONObject jsonPayload = new JSONObject();
+            jsonPayload.put("requestType", "PASSWORD_RESET");
+            jsonPayload.put("email", email);
+
+            // Set headers and payload
+            httpPost.setHeader("Content-Type", "application/json");
+            httpPost.setEntity(new StringEntity(jsonPayload.toString()));
+
+            try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
+                int statusCode = response.getStatusLine().getStatusCode();
+                if (statusCode == 200) {
+                    System.out.println("Password reset email sent to: " + email);
+                } else {
+                    throw new Exception("Failed to send password reset email. HTTP Status Code: " + statusCode);
+                }
+            }
+        }
+    }
+
 
     /**
      * Main method for testing FirebaseAuthHandler.

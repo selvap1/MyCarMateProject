@@ -11,10 +11,11 @@
 
 /* Logo styles */
 .logo {
-    -fx-margin-bottom: 10px; /* Adjust spacing below the logo */
-    -fx-fit-width: 200px; /* Set logo width */
-    -fx-fit-height: 150px; /* Set logo height */
+    -fx-alignment: center;
+    -fx-padding: 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 2, 2);
 }
+
 
 /* Sign-in text style */
 .login-title {
@@ -52,15 +53,37 @@
     -fx-background-radius: 5px;
 }
 
+.login-button:hover {
+    -fx-background-color: #0056b3; /* Darker shade on hover */
+}
+
 /* Links section */
 .login-links {
     -fx-margin-top: 20px;
     -fx-text-alignment: center;
+    -fx-spacing: 10px; /* Adjust spacing between links/buttons */
 }
 
-/* Forgot password and not a member text */
-.forgot-password, .not-member {
-    -fx-margin: 5px 0;
+/* Forgot password button */
+.forgot-password-button {
+    -fx-background-color: transparent; /* Transparent background */
+    -fx-text-fill: #007BFF; /* Blue text color */
+    -fx-font-size: 14px;
+    -fx-border: none; /* No border */
+    -fx-cursor: hand;
+    -fx-padding: 5px;
+}
+
+.forgot-password-button:hover {
+    -fx-text-fill: #0056b3; /* Darker blue on hover */
+    -fx-underline: true; /* Underline on hover */
+}
+
+/* Not a member label */
+.not-member {
+    -fx-font-size: 14px;
+    -fx-text-fill: #6c757d; /* Light gray text */
+    -fx-margin: 5px 0; /* Add spacing */
 }
 
 /* Signup button */
@@ -72,9 +95,6 @@
     -fx-cursor: hand;
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
-}
-.login-button:hover {
-    -fx-background-color: #0056b3; /* Darker shade on hover */
 }
 
 .signup-button:hover {
