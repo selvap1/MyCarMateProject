@@ -107,4 +107,18 @@ public class UserDAO {
         }
     }
 
+    public void insertUser(String firebaseUid, String firstName, String lastName, String username, String email) throws Exception {
+        String query = "INSERT INTO users (firebase_uid, first_name, last_name, username, email) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, firebaseUid);
+            statement.setString(2, firstName);
+            statement.setString(3, lastName);
+            statement.setString(4, username);
+            statement.setString(5, email);
+            statement.executeUpdate();
+        }
+    }
+
 }

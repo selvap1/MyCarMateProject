@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15" xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.mycarmate.controllers.EditInsuranceController"
+      style="-fx-padding: 20; -fx-background-color: #f8f8f8;">
+    <Label text="Edit Insurance Record" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+    <TextField fx:id="providerField" promptText="Provider Name" />
+    <TextField fx:id="policyField" promptText="Policy Number" />
+    <ComboBox fx:id="startMonthPicker" promptText="Start Month" />
+    <ComboBox fx:id="startYearPicker" promptText="Start Year" />
+    <ComboBox fx:id="endMonthPicker" promptText="End Month" />
+    <ComboBox fx:id="endYearPicker" promptText="End Year" />
+    <TextField fx:id="coverageField" promptText="Coverage Amount" />
+
+    <HBox spacing="10">
+        <Button text="Save" onAction="#handleSave" style="-fx-background-color: #3498db; -fx-text-fill: white;" />
+        <Button text="Cancel" onAction="#handleCancel" style="-fx-background-color: #e74c3c; -fx-text-fill: white;" />
+    </HBox>
+</VBox>

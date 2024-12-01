@@ -11,6 +11,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
+import java.io.IOException;
+
 public class LoginController {
 
     @FXML
@@ -27,6 +29,7 @@ public class LoginController {
 
     @FXML
     private Label errorLabel;
+
 
     private FirebaseAuthHandler firebaseAuthHandler;
 
@@ -80,18 +83,24 @@ public class LoginController {
     @FXML
     private void handleSignUp() {
         try {
+            // Load the RegisterPage.fxml file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/RegisterPage.fxml"));
-            Parent registerRoot = loader.load();
+            Parent root = loader.load();
 
-            Stage primaryStage = (Stage) signUpButton.getScene().getWindow();
-            Scene registerScene = new Scene(registerRoot);
-            primaryStage.setScene(registerScene);
-            primaryStage.setTitle("Sign Up - MyCarMate");
-        } catch (Exception e) {
-            System.err.println("Error navigating to RegisterPage: " + e.getMessage());
+            // Get the current stage (window)
+            Stage stage = (Stage) signUpButton.getScene().getWindow();
+
+            // Set the scene with the Register Page
+            stage.setScene(new Scene(root));
+            stage.setTitle("Register");
+            stage.sizeToScene(); // Optional
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
 
     private void loadDashboardScene(String firebaseUid) {
         try {

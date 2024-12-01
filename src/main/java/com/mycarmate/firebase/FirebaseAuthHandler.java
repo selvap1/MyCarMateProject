@@ -118,6 +118,19 @@ public class FirebaseAuthHandler {
         });
     }
 
+    public String createUser(String email, String password) throws FirebaseAuthException {
+        // Build a request to create a new user
+        UserRecord.CreateRequest request = new UserRecord.CreateRequest()
+                .setEmail(email)
+                .setPassword(password);
+
+        // Create the user in Firebase Authentication
+        UserRecord userRecord = FirebaseAuth.getInstance().createUser(request);
+
+        // Return the user's Firebase UID
+        return userRecord.getUid();
+    }
+
     /**
      * Main method for testing FirebaseAuthHandler.
      */

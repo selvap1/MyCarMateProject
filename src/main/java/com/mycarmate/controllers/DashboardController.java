@@ -58,6 +58,7 @@ public class DashboardController {
 
     /**
      * Set the logged-in user ID and fetch associated cars.
+     *
      * @param userId The resolved user ID.
      */
     public void setLoggedInUserId(int userId) {
@@ -70,6 +71,7 @@ public class DashboardController {
 
     /**
      * Initialize the dashboard using the Firebase UID.
+     *
      * @param firebaseUid The Firebase UID of the logged-in user.
      */
     @FXML
@@ -163,6 +165,7 @@ public class DashboardController {
 
     /**
      * Fetch and display cars for the given user_id.
+     *
      * @param userId The user ID.
      */
     private void fetchCarsForUser(int userId) {
@@ -211,7 +214,6 @@ public class DashboardController {
             e.printStackTrace();
         }
     }
-
 
 
     private void editCar(Car car) {
@@ -311,7 +313,6 @@ public class DashboardController {
     }
 
 
-
     @FXML
     private void openAddCarPopup() {
         try {
@@ -364,7 +365,20 @@ public class DashboardController {
 
 
     @FXML
-    private void navigateToInsurance() {
-        System.out.println("Navigating to Insurance Page");
+    private void navigateToInsurancePage() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/InsurancePage.fxml"));
+            Parent root = loader.load();
+
+            InsurancePageController controller = loader.getController();
+            controller.setLoggedInUserId(loggedInUserId);
+
+            Stage stage = (Stage) profileImage.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (Exception e) {
+            System.err.println("Error navigating to InsurancePage: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
