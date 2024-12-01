@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.mycarmate.controllers.EditMaintenanceRecordController"
+      style="-fx-padding: 20; -fx-background-color: #f8f8f8;">
+    <Label text="Edit Maintenance Record" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+    <DatePicker fx:id="dateOfServicePicker" promptText="Date of Service" />
+
+    <Label text="Service Type:" />
+    <ComboBox fx:id="serviceTypeDropdown" promptText="Select Service Type">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Inspection" />
+                <String fx:value="Registration" />
+                <String fx:value="Oil Change" />
+                <String fx:value="Other" />
+            </FXCollections>
+        </items>
+    </ComboBox>
+    <TextField fx:id="customServiceTypeField" promptText="Enter custom service type (if 'Other')" />
+
+    <TextField fx:id="costField" promptText="Cost" />
+    <TextField fx:id="mileageField" promptText="Mileage" />
+
+    <HBox spacing="10">
+        <Button text="Save" onAction="#handleSave" styleClass="modal-save-button" />
+        <Button text="Cancel" onAction="#handleCancel" styleClass="modal-cancel-button" />
+    </HBox>
+</VBox>

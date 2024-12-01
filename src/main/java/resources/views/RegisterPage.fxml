@@ -1,49 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Button?>
 
-<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.mycarmate.controllers.RegisterController"
-      alignment="CENTER" spacing="20" styleClass="register-container">
-    <!-- Logo -->
-    <ImageView fx:id="logoImageView" fitWidth="200" fitHeight="150" />
-
-    <!-- Title -->
-    <Label text="Register" styleClass="register-title" />
-
-    <!-- Error and Success Messages -->
-    <Text fx:id="errorText" styleClass="error-message" visible="false" />
-    <Text fx:id="successText" styleClass="success-message" visible="false" />
-
-    <!-- Registration Form -->
-    <VBox spacing="10" styleClass="register-form">
-        <HBox spacing="5">
-            <Label text="First Name:" />
-            <TextField fx:id="firstNameField" promptText="First Name" />
-        </HBox>
-        <HBox spacing="5">
-            <Label text="Last Name:" />
-            <TextField fx:id="lastNameField" promptText="Last Name" />
-        </HBox>
-        <HBox spacing="5">
-            <Label text="Username:" />
-            <TextField fx:id="usernameField" promptText="Username" />
-        </HBox>
-        <HBox spacing="5">
-            <Label text="Email:" />
-            <TextField fx:id="emailField" promptText="Email" />
-        </HBox>
-        <HBox spacing="5">
-            <Label text="Password:" />
-            <PasswordField fx:id="passwordField" promptText="Password" />
-        </HBox>
-        <Button text="Register" onAction="#handleRegister" />
-        <Text fx:id="loadingText" text="Loading..." visible="false" />
-    </VBox>
-
-    <!-- Login Link -->
-    <Label text="Already have an account?">
-        <Hyperlink text="Log in" onAction="#goToLogin" />
-    </Label>
+<VBox xmlns:fx="http://javafx.com/javafx"
+      xmlns="http://javafx.com/javafx"
+      fx:controller="com.mycarmate.controllers.RegisterController"
+      alignment="CENTER" spacing="10" style="-fx-padding: 20;"
+      stylesheets="@styles/RegisterPage.css">
+    <Label text="Register" style="-fx-font-size: 24; -fx-font-weight: bold;" />
+    <Label fx:id="statusLabel" text="" />
+    <TextField fx:id="firstNameField" promptText="First Name" />
+    <TextField fx:id="lastNameField" promptText="Last Name" />
+    <TextField fx:id="emailField" promptText="Email" />
+    <TextField fx:id="usernameField" promptText="Username" />
+    <PasswordField fx:id="passwordField" promptText="Password" />
+    <Button fx:id="registerButton" text="Register" onAction="#handleRegister" />
+    <Button fx:id="goToLoginButton" text="Back to Login" onAction="#goToLogin" />
 </VBox>

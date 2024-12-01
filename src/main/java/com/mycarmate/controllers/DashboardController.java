@@ -58,6 +58,7 @@ public class DashboardController {
 
     /**
      * Set the logged-in user ID and fetch associated cars.
+     *
      * @param userId The resolved user ID.
      */
     public void setLoggedInUserId(int userId) {
@@ -70,6 +71,7 @@ public class DashboardController {
 
     /**
      * Initialize the dashboard using the Firebase UID.
+     *
      * @param firebaseUid The Firebase UID of the logged-in user.
      */
     @FXML
@@ -163,6 +165,7 @@ public class DashboardController {
 
     /**
      * Fetch and display cars for the given user_id.
+     *
      * @param userId The user ID.
      */
     private void fetchCarsForUser(int userId) {
@@ -213,7 +216,6 @@ public class DashboardController {
     }
 
 
-
     private void editCar(Car car) {
         try {
             // Fetch full car details using the CarDAO
@@ -239,10 +241,77 @@ public class DashboardController {
         System.out.println("Deleted car: " + car);
     }
 
+
+    private void loadUserData() {
+        try {
+            UserDAO userDAO = new UserDAO();
+            Map<String, String> userDetails = userDAO.fetchUserDetailsById(loggedInUserId);
+
+            if (userDetails != null) {
+                // Update the username
+                String username = userDetails.get("username");
+                welcomeMessage.setText("Welcome " + (username != null ? username : "User") + " to your Dashboard!");
+
+                // Update the profile picture
+                String profilePictureUrl = userDetails.get("profile_picture");
+                if (profilePictureUrl != null && !profilePictureUrl.isEmpty()) {
+                    profileImage.setImage(new Image(profilePictureUrl));
+                } else {
+                    profileImage.setImage(new Image("/assets/account_circle.png")); // Default image
+                }
+            } else {
+                System.err.println("Failed to load user data. User details not found.");
+            }
+        } catch (Exception e) {
+            System.err.println("Error loading user data: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+
     @FXML
     private void openProfileModal() {
-        System.out.println("Profile Modal Opened");
+        try {
+            // Load the FXML file for the Edit Profile popup
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/EditProfilePopup.fxml"));
+            Parent root = loader.load();
+
+            // Get the controller for the popup
+            EditProfileController controller = loader.getController();
+
+            // Fetch user data directly from the database
+            UserDAO userDAO = new UserDAO();
+            Map<String, String> userDetails = userDAO.fetchUserDetailsById(loggedInUserId);
+
+            if (userDetails != null) {
+                // Pass the user details to the controller
+                controller.setLoggedInUserDetails(
+                        loggedInUserId,
+                        userDetails.get("first_name"),
+                        userDetails.get("last_name"),
+                        userDetails.get("username"),
+                        userDetails.get("profile_picture")
+                );
+            } else {
+                System.err.println("No user found with ID: " + loggedInUserId);
+            }
+
+            // Display the popup
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Edit Profile");
+            popupStage.setScene(new Scene(root));
+            popupStage.initModality(Modality.APPLICATION_MODAL); // Makes the popup modal
+            popupStage.showAndWait();
+
+            // Refresh the dashboard with updated user data
+            loadUserData();
+
+        } catch (Exception e) {
+            System.err.println("Error opening Edit Profile popup: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
+
 
     @FXML
     private void openAddCarPopup() {
@@ -296,7 +365,20 @@ public class DashboardController {
 
 
     @FXML
-    private void navigateToInsurance() {
-        System.out.println("Navigating to Insurance Page");
+    private void navigateToInsurancePage() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/InsurancePage.fxml"));
+            Parent root = loader.load();
+
+            InsurancePageController controller = loader.getController();
+            controller.setLoggedInUserId(loggedInUserId);
+
+            Stage stage = (Stage) profileImage.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (Exception e) {
+            System.err.println("Error navigating to InsurancePage: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

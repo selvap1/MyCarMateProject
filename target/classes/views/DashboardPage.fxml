@@ -20,7 +20,7 @@
             <Button text="Edit Profile" onAction="#openProfileModal" style="-fx-background-color: transparent; -fx-text-fill: white;" />
             <Button text="Add Car" onAction="#openAddCarPopup" style="-fx-background-color: transparent; -fx-text-fill: white;" />
             <Button text="View Maintenance Records" onAction="#navigateToMaintenanceRecords" style="-fx-background-color: transparent; -fx-text-fill: white;" />
-            <Button text="View Insurance Info" onAction="#navigateToInsurance" style="-fx-background-color: transparent; -fx-text-fill: white;" />
+            <Button text="View Insurance Info" onAction="#navigateToInsurancePage" style="-fx-background-color: transparent; -fx-text-fill: white;" />
         </VBox>
     </left>
 
