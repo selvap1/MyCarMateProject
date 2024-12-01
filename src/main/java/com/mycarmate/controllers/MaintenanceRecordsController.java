@@ -57,6 +57,16 @@ public class MaintenanceRecordsController {
         costColumn.setCellValueFactory(cellData -> cellData.getValue().costProperty().asObject());
         mileageColumn.setCellValueFactory(cellData -> cellData.getValue().mileageProperty().asObject());
 
+        // Set specific column widths
+        dateColumn.setPrefWidth(150);
+        serviceTypeColumn.setPrefWidth(150);
+        costColumn.setPrefWidth(100);
+        mileageColumn.setPrefWidth(100);
+
+        // Constrain resize policy to avoid empty columns
+        recordsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+
         recordsTable.setItems(records);
 
         // Add listener to carSelector

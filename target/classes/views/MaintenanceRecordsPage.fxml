@@ -3,13 +3,26 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import java.net.URL?>
 <VBox spacing="10" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.mycarmate.controllers.MaintenanceRecordsController" style="-fx-padding: 20; -fx-background-color: #f8f8f8;">
+      fx:controller="com.mycarmate.controllers.MaintenanceRecordsController"
+      style="-fx-padding: 20; -fx-background-color: #f8f8f8;">
+    <stylesheets>
+        <URL value="@/styles/CarMaintenancePage.css" />
+    </stylesheets>
 
-    <Label text="Maintenance Records" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+    <Label text="Maintenance Records" styleClass="page-title" />
 
     <!-- Car Selector -->
-    <ComboBox fx:id="carSelector" promptText="Select a Car" />
+    <ComboBox fx:id="carSelector" promptText="Select a Car" styleClass="car-selector" />
+
+    <!-- Buttons Above Table -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Button text="Add Record" onAction="#handleAddRecord" styleClass="add-button" />
+        <Button text="Edit Record" onAction="#handleEditRecord" styleClass="edit-button" />
+        <Button text="Delete Record" onAction="#handleDeleteRecord" styleClass="delete-button" />
+    </HBox>
 
     <!-- Maintenance Records Table -->
     <TableView fx:id="recordsTable" prefHeight="400" prefWidth="800">
@@ -20,11 +33,4 @@
             <TableColumn fx:id="mileageColumn" text="Mileage At Service" />
         </columns>
     </TableView>
-
-    <!-- Add/Edit/Delete Buttons -->
-    <HBox spacing="10">
-        <Button text="Add Record" onAction="#handleAddRecord" style="-fx-background-color: #3498db; -fx-text-fill: white;" />
-        <Button text="Edit Record" onAction="#handleEditRecord" styleClass="modal-edit-button" />
-        <Button text="Delete Record" onAction="#handleDeleteRecord" styleClass="modal-cancel-button" />
-    </HBox>
 </VBox>

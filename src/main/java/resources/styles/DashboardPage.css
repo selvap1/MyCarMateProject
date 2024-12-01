@@ -31,12 +31,18 @@
     -fx-background-color: #f4f4f4;
 }
 
-.dashboard-table tr:nth-child(even) {
-    -fx-background-color: #f9f9f9;
+/* Alternate Row Colors */
+.table-row-cell:odd {
+    -fx-background-color: #f9f9f9; /* Light gray for odd rows */
 }
 
-.dashboard-table tr:hover {
-    -fx-background-color: #f1f1f1;
+.table-row-cell:even {
+    -fx-background-color: #ffffff; /* White for even rows */
+}
+
+/* Hover Effect for Table Rows */
+.table-row-cell:hover {
+    -fx-background-color: #f1f1f1; /* Slightly darker gray on hover */
 }
 
 /* Align action buttons side-by-side */
@@ -74,4 +80,60 @@
 
 .delete-button:hover {
     -fx-background-color: #c0392b; /* Darker red on hover */
+}
+
+/* Sidebar Buttons */
+#editProfileButton,
+#addCarButton,
+#maintenanceRecordsButton,
+#insuranceInfoButton,
+#logoutButton {
+    -fx-background-color: #3498db; /* Blue */
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 12px 20px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 5, 0, 2, 2);
+    -fx-min-width: 200px; /* Uniform button width */
+    -fx-min-height: 50px; /* Uniform button height */
+}
+
+/* Hover and Pressed Effects for Sidebar Buttons */
+#editProfileButton:hover,
+#addCarButton:hover,
+#maintenanceRecordsButton:hover,
+#insuranceInfoButton:hover,
+#logoutButton:hover {
+    -fx-background-color: #2980b9; /* Darker blue on hover */
+}
+
+#editProfileButton:pressed,
+#addCarButton:pressed,
+#maintenanceRecordsButton:pressed,
+#insuranceInfoButton:pressed,
+#logoutButton:pressed {
+    -fx-background-color: #1f5a87; /* Even darker blue on press */
+    -fx-effect: none;
+}
+
+/* Sidebar Profile Image */
+#profileImage {
+    -fx-border-radius: 50%; /* Circular profile picture */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 10, 0, 4, 4);
+    -fx-margin-bottom: 40px; /* Space below the profile image */
+    -fx-margin-top: 20px; /* Space above the profile image */
+    -fx-alignment: center; /* Center-align the profile image */
+    -fx-min-width: 150px; /* Center alignment aid */
+}
+
+/* Spacing Between Sidebar Buttons */
+VBox > #editProfileButton,
+VBox > #addCarButton,
+VBox > #maintenanceRecordsButton,
+VBox > #insuranceInfoButton,
+VBox > #logoutButton {
+    -fx-margin-top: 40px; /* Larger spacing between buttons */
 }

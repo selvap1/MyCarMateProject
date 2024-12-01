@@ -1,102 +1,113 @@
-.container {
-    -fx-padding: 20px;
-    -fx-width: 90%;
-    -fx-margin: auto;
-    -fx-font-family: "Arial", sans-serif;
-}
-
-/* Form styles */
-.form-section {
-    -fx-display: flex;
-    -fx-alignment: center-left;
-    -fx-margin-bottom: 20px;
-}
-
-.form-label {
-    -fx-font-size: 1.2em;
+/* General Page Styles */
+.page-title {
+    -fx-font-size: 20px;
     -fx-font-weight: bold;
-    -fx-margin-right: 15px;
+    -fx-text-fill: #2c3e50; /* Dark gray-blue */
+    -fx-padding: 10 0;
+    -fx-alignment: center;
 }
 
-.form-select, .form-input {
-    -fx-padding: 8px 12px;
-    -fx-font-size: 1.1em;
-    -fx-border-color: #ccc;
-    -fx-border-radius: 5px;
-    -fx-outline: none;
-    -fx-transition: all 0.2s ease-in-out;
-    -fx-width: 100%;
+.car-selector {
+    -fx-font-size: 14px;
+    -fx-padding: 5;
+    -fx-border-color: #3498db; /* Blue border */
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-background-color: white;
 }
 
-.highlight-dropdown {
-    -fx-background-color: #f9f9f9;
-    -fx-text-fill: #333;
+/* TableView Styling */
+.table-view {
+    -fx-border-color: #ddd;
+    -fx-background-color: white;
+    -fx-border-radius: 5;
+    -fx-padding: 5;
 }
 
-/* Button styles */
-.button {
-    -fx-background-color: #4CAF50;
+.table-view .column-header {
+    -fx-background-color: #3498db; /* Header background */
     -fx-text-fill: white;
-    -fx-font-size: 1em;
-    -fx-padding: 10px 20px;
-    -fx-margin-top: 15px;
-    -fx-border-radius: 5px;
-    -fx-cursor: hand;
-    -fx-transition: background-color 0.3s ease;
-}
-
-.button:hover {
-    -fx-background-color: #45a049;
-}
-
-/* Table styles */
-.table-container {
-    -fx-margin-top: 20px;
-    -fx-overflow-x: auto;
-}
-
-.records-table {
-    -fx-width: 100%;
-    -fx-border-collapse: collapse;
-    -fx-border-color: #ddd;
-    -fx-margin-top: 20px;
-}
-
-.records-table th, .records-table td {
-    -fx-padding: 10px;
-    -fx-text-alignment: left;
-    -fx-border-color: #ddd;
-    -fx-border-width: 0 0 1px 0; /* Border below */
-}
-
-.records-table th {
-    -fx-background-color: #f4f4f4;
+    -fx-font-size: 14px;
     -fx-font-weight: bold;
 }
 
-.records-table tr:hover {
-    -fx-background-color: #f1f1f1;
+.table-view .table-row-cell {
+    -fx-background-color: white; /* Default row color */
+    -fx-text-fill: black; /* Default text color */
 }
 
-.styled-table thead {
-    -fx-background-color: #f4f4f4;
+/* Alternating Row Colors */
+.table-view .table-row-cell:odd {
+    -fx-background-color: #f9f9f9; /* Light gray for odd rows */
 }
 
-.styled-table tbody tr:nth-child(even) {
-    -fx-background-color: #f9f9f9;
+/* Hover Effect for Rows */
+.table-view .table-row-cell:hover {
+    -fx-background-color: #d6eaf8; /* Light blue on hover */
 }
 
-.styled-table tbody tr:hover {
-    -fx-background-color: #f1f1f1;
+/* Selected Row Styling (Persistent Highlight) */
+.table-view .table-row-cell:selected {
+    -fx-background-color: #3498db; /* Persistent blue highlight */
+    -fx-text-fill: white; /* White text for visibility */
 }
 
-/* Media query alternative for responsiveness in JavaFX */
-@media (max-width: 600px) {
-    .form-input, .form-select, .button {
-        -fx-width: 100%;
-    }
-    .records-table, .table-container {
-        -fx-width: 100%;
-        -fx-overflow-x: auto;
-    }
+/* Prevent Hover from Overriding Selected Row */
+.table-view .table-row-cell:selected:hover {
+    -fx-background-color: #3498db; /* Keep the same blue highlight */
+    -fx-text-fill: white;
+}
+
+/* Remove focus border and apply selected styling explicitly */
+.table-view .table-row-cell:focused {
+    -fx-background-color: #3498db; /* Match selected color */
+    -fx-text-fill: white; /* Ensure text is visible */
+}
+
+/* Button Styling */
+.add-button,
+.edit-button,
+.delete-button {
+    -fx-font-size: 14px;
+    -fx-padding: 10 20;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 5, 0, 2, 2);
+}
+
+/* Add Button */
+.add-button {
+    -fx-background-color: #27ae60; /* Green */
+    -fx-text-fill: white;
+}
+
+.add-button:hover {
+    -fx-background-color: #1e8449; /* Darker green on hover */
+}
+
+/* Edit Button */
+.edit-button {
+    -fx-background-color: #f39c12; /* Orange */
+    -fx-text-fill: white;
+}
+
+.edit-button:hover {
+    -fx-background-color: #d68910; /* Darker orange on hover */
+}
+
+/* Delete Button */
+.delete-button {
+    -fx-background-color: #e74c3c; /* Red */
+    -fx-text-fill: white;
+}
+
+.delete-button:hover {
+    -fx-background-color: #c0392b; /* Darker red on hover */
+}
+
+/* HBox Styling for Buttons */
+.hbox {
+    -fx-spacing: 10;
+    -fx-padding: 10 0;
 }

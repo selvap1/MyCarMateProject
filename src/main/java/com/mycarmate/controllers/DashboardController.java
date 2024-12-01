@@ -19,6 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -381,4 +382,37 @@ public class DashboardController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void handleLogout() {
+        try {
+            // Show confirmation alert
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Logout Confirmation");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure you want to log out?");
+
+            // Wait for user response
+            if (alert.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
+                // Load the Login Page
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/LoginPage.fxml"));
+                Parent root = loader.load();
+
+                // Set the scene to the Login Page
+                Stage stage = (Stage) profileImage.getScene().getWindow();
+                Scene loginScene = new Scene(root);
+
+                // Apply LoginPage.css stylesheet
+                loginScene.getStylesheets().add(getClass().getResource("/styles/LoginPage.css").toExternalForm());
+
+                stage.setScene(loginScene);
+                stage.setTitle("Login");
+                stage.sizeToScene(); // Adjust the stage size if necessary
+            }
+        } catch (IOException e) {
+            System.err.println("Error during logout: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
 }
