@@ -4,9 +4,14 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<?import java.net.URL?>
 <VBox spacing="10" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.mycarmate.controllers.AddCarController"
       style="-fx-padding: 20; -fx-background-color: #f8f8f8;">
+    <stylesheets>
+        <URL value="@styles/AddCarPopUp.css" />
+    </stylesheets>
+
 
     <!-- Title -->
     <Label text="Add New Car" style="-fx-font-size: 18px; -fx-font-weight: bold;" />

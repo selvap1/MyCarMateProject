@@ -62,6 +62,32 @@ public class UserDAO {
         return userProfile;
     }
 
+    public static String fetchFirebaseUidByUserId(int userId) {
+        String firebaseUid = null;
+
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            String query = "SELECT firebase_uid FROM users WHERE user_id = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setInt(1, userId);
+
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        firebaseUid = rs.getString("firebase_uid");
+                        System.out.println("Fetched Firebase UID: " + firebaseUid + " for User ID: " + userId);
+                    } else {
+                        System.err.println("No Firebase UID found for User ID: " + userId);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error fetching Firebase UID: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return firebaseUid;
+    }
+
+
     public Map<String, String> fetchUserDetailsById(int userId) throws Exception {
         String query = "SELECT first_name, last_name, username, profile_picture FROM users WHERE user_id = ?";
         Map<String, String> userDetails = new HashMap<>();

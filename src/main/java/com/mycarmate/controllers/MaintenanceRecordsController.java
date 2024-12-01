@@ -2,6 +2,8 @@ package com.mycarmate.controllers;
 
 import com.mycarmate.dao.CarDAO;
 import com.mycarmate.dao.MaintenanceDAO;
+import com.mycarmate.dao.SessionManager;
+import com.mycarmate.dao.UserDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.List;
 
 public class MaintenanceRecordsController {
@@ -33,6 +36,9 @@ public class MaintenanceRecordsController {
 
     @FXML
     private TableColumn<MaintenanceRecord, Integer> mileageColumn;
+
+    @FXML
+    private Button backToDashboardButton;
 
     private ObservableList<MaintenanceRecord> records = FXCollections.observableArrayList();
     private int loggedInUserId;
@@ -231,4 +237,35 @@ public class MaintenanceRecordsController {
         alert.setContentText(content);
         alert.showAndWait();
     }
+
+    @FXML
+    private void navigateToDashboard() {
+        try {
+            // Retrieve firebase_uid from user_id
+            int userId = SessionManager.getLoggedInUserId();
+            UserDAO userDAO = new UserDAO();
+            String firebaseUid = userDAO.fetchFirebaseUidByUserId(userId);
+
+            if (firebaseUid != null) {
+                // Load the DashboardPage.fxml file
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/DashboardPage.fxml"));
+                Parent root = loader.load();
+
+                // Get the controller and initialize with firebaseUid
+                DashboardController dashboardController = loader.getController();
+                dashboardController.initializeDashboard(firebaseUid);
+
+                // Switch to the Dashboard scene
+                Stage stage = (Stage) backToDashboardButton.getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.setTitle("Dashboard");
+            } else {
+                System.err.println("Unable to navigate: Firebase UID is null for User ID: " + userId);
+            }
+        } catch (IOException e) {
+            System.err.println("Error navigating to Dashboard: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
 }

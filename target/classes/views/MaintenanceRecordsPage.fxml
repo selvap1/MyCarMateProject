@@ -11,6 +11,9 @@
         <URL value="@/styles/CarMaintenancePage.css" />
     </stylesheets>
 
+    <HBox spacing="10" style="-fx-padding: 10;">
+        <Button fx:id="backToDashboardButton" text="Back to Dashboard" alignment="TOP_RIGHT" onAction="#navigateToDashboard" styleClass="back-button" />
+    </HBox>
 
     <Label text="Maintenance Records" styleClass="page-title" />
 

@@ -2,6 +2,8 @@ package com.mycarmate.controllers;
 
 import com.mycarmate.dao.CarDAO;
 import com.mycarmate.dao.InsuranceDAO;
+import com.mycarmate.dao.SessionManager;
+import com.mycarmate.dao.UserDAO;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -38,6 +40,8 @@ public class InsurancePageController {
     private TableColumn<InsuranceRecord, String> coverageAmountColumn;
     @FXML
     private TableColumn<InsuranceRecord, Void> actionsColumn;
+    @FXML
+    private Button backToDashboardButton;
 
     private int loggedInUserId;
     private ObservableList<InsuranceRecord> insuranceRecords = FXCollections.observableArrayList();
@@ -248,5 +252,35 @@ public class InsurancePageController {
         alert.setTitle(title);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    @FXML
+    private void navigateToDashboard() {
+        try {
+            // Retrieve firebase_uid from user_id
+            int userId = SessionManager.getLoggedInUserId();
+            UserDAO userDAO = new UserDAO();
+            String firebaseUid = userDAO.fetchFirebaseUidByUserId(userId);
+
+            if (firebaseUid != null) {
+                // Load the DashboardPage.fxml file
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/DashboardPage.fxml"));
+                Parent root = loader.load();
+
+                // Get the controller and initialize with firebaseUid
+                DashboardController dashboardController = loader.getController();
+                dashboardController.initializeDashboard(firebaseUid);
+
+                // Switch to the Dashboard scene
+                Stage stage = (Stage) backToDashboardButton.getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.setTitle("Dashboard");
+            } else {
+                System.err.println("Unable to navigate: Firebase UID is null for User ID: " + userId);
+            }
+        } catch (IOException e) {
+            System.err.println("Error navigating to Dashboard: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

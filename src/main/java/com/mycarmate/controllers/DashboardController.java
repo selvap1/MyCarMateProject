@@ -68,6 +68,7 @@ public class DashboardController {
 
         // Fetch and display cars for the user_id
         fetchCarsForUser(userId);
+
     }
 
     /**
