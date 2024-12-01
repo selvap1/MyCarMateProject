@@ -56,6 +56,18 @@
             <artifactId>google-auth-library-oauth2-http</artifactId>
             <version>1.22.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20131018</version>
+        </dependency>
+
+
     </dependencies>
 
     <repositories>

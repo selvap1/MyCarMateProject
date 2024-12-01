@@ -63,9 +63,9 @@
     </VBox>
 
     <!-- Insurance Records Table -->
-    <VBox spacing="15">
+    <VBox spacing="15" VBox.vgrow="ALWAYS">
         <Label text="Insurance Records" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
-        <TableView fx:id="insuranceTable" prefHeight="300" prefWidth="800" styleClass="insurance-table">
+        <TableView fx:id="insuranceTable" prefHeight="200" maxHeight="200" prefWidth="800" styleClass="insurance-table">
             <columns>
                 <TableColumn fx:id="carColumn" text="Car" prefWidth="150" />
                 <TableColumn fx:id="providerNameColumn" text="Provider Name" prefWidth="150" />
