@@ -3,13 +3,24 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="10" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml"
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<?import java.net.URL?>
+<VBox spacing="15" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.mycarmate.controllers.EditMaintenanceRecordController"
       style="-fx-padding: 20; -fx-background-color: #f8f8f8;">
+    <stylesheets>
+        <URL value="@/styles/EditMaintenanceRecordModal.css" />
+    </stylesheets>
+
+    <!-- Title -->
     <Label text="Edit Maintenance Record" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
 
-    <DatePicker fx:id="dateOfServicePicker" promptText="Date of Service" />
+    <!-- Date Picker -->
+    <Label text="Date of Service:" />
+    <DatePicker fx:id="dateOfServicePicker" promptText="Select Date of Service" />
 
+    <!-- Service Type -->
     <Label text="Service Type:" />
     <ComboBox fx:id="serviceTypeDropdown" promptText="Select Service Type">
         <items>
@@ -21,12 +32,20 @@
             </FXCollections>
         </items>
     </ComboBox>
-    <TextField fx:id="customServiceTypeField" promptText="Enter custom service type (if 'Other')" />
 
-    <TextField fx:id="costField" promptText="Cost" />
-    <TextField fx:id="mileageField" promptText="Mileage" />
+    <Label text="Custom Service Type (if 'Other'):" />
+    <TextField fx:id="customServiceTypeField" promptText="Enter Custom Service Type" />
 
-    <HBox spacing="10">
+    <!-- Cost -->
+    <Label text="Cost:" />
+    <TextField fx:id="costField" promptText="Enter Cost" />
+
+    <!-- Mileage -->
+    <Label text="Mileage:" />
+    <TextField fx:id="mileageField" promptText="Enter Mileage" />
+
+    <!-- Buttons -->
+    <HBox spacing="10" style="-fx-alignment: center;">
         <Button text="Save" onAction="#handleSave" styleClass="modal-save-button" />
         <Button text="Cancel" onAction="#handleCancel" styleClass="modal-cancel-button" />
     </HBox>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+
+<?import java.net.URL?>
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.mycarmate.controllers.EditCarController"
+      styleClass="modal-container">
+
+    <stylesheets>
+        <URL value="@/styles/EditCarModal.css" />
+    </stylesheets>
+
+
+    <Label text="Edit Car" styleClass="modal-title" />
+
+    <!-- Make Field -->
+    <Label text="Make:" />
+    <TextField fx:id="makeField" promptText="Enter Make" styleClass="text-field" />
+
+    <!-- Model Field -->
+    <Label text="Model:" />
+    <TextField fx:id="modelField" promptText="Enter Model" styleClass="text-field" />
+
+    <!-- Year Field -->
+    <Label text="Year:" />
+    <TextField fx:id="yearField" promptText="Enter Year" styleClass="text-field" />
+
+    <!-- VIN Field -->
+    <Label text="VIN:" />
+    <TextField fx:id="vinField" promptText="Enter VIN" styleClass="text-field" />
+
+    <!-- Mileage -->
+    <Label text="Mileage:" />
+    <TextField fx:id="mileageField" promptText="Enter Mileage" />
+
+    <!-- Registration Field -->
+    <Label text="Registration Expiration Date" />
+    <HBox spacing="10">
+        <ComboBox fx:id="registrationMonthPicker" promptText="Month" styleClass="modal-combobox" />
+        <ComboBox fx:id="registrationYearPicker" promptText="Year" styleClass="modal-combobox" />
+    </HBox>
+
+    <!-- Inspection Field -->
+    <Label text="Inspection Expiration Date" />
+    <HBox spacing="10">
+        <ComboBox fx:id="inspectionMonthPicker" promptText="Month" styleClass="modal-combobox" />
+        <ComboBox fx:id="inspectionYearPicker" promptText="Year" styleClass="modal-combobox" />
+    </HBox>
+
+    <!-- Buttons -->
+    <HBox spacing="10" alignment="center" styleClass="button-container">
+        <Button text="Save" onAction="#handleSave" styleClass="modal-save-button" />
+        <Button text="Cancel" onAction="#handleCancel" styleClass="modal-cancel-button" />
+    </HBox>
+</VBox>

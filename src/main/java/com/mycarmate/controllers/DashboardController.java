@@ -19,6 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -67,6 +68,7 @@ public class DashboardController {
 
         // Fetch and display cars for the user_id
         fetchCarsForUser(userId);
+
     }
 
     /**
@@ -215,31 +217,81 @@ public class DashboardController {
         }
     }
 
-
     private void editCar(Car car) {
         try {
+            if (car == null) {
+                throw new IllegalArgumentException("Car object is null");
+            }
+
             // Fetch full car details using the CarDAO
             CarDAO carDAO = new CarDAO();
-            Car fullCarDetails = carDAO.fetchCarById(car.getCarId());
+            Car fullCarDetails = carDAO.fetchCarById(Integer.parseInt(car.getCarId())); // Convert carId to int
 
             // Open the edit modal and pass the full car details
             openEditModal(fullCarDetails);
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid car ID format: " + e.getMessage());
+            e.printStackTrace();
         } catch (Exception e) {
             System.err.println("Error fetching full car details: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
+
     private void openEditModal(Car car) {
-        // Implement the logic to open the modal and populate it with the car details
-        System.out.println("Editing car: " + car);
+        try {
+            if (car == null) {
+                throw new IllegalArgumentException("Car object is null");
+            }
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/EditCarModal.fxml"));
+            Parent root = loader.load();
+
+            // Get controller and pass car details
+            EditCarController controller = loader.getController();
+            controller.setCarDetails(car); // Ensure this method correctly assigns all fields
+
+            // Display the modal
+            Stage stage = new Stage();
+            stage.setTitle("Edit Car");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+
+            // Optionally reload cars after editing
+            fetchCarsForUser(loggedInUserId);
+
+        } catch (Exception e) {
+            System.err.println("Error opening edit modal: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
+
     private void deleteCar(Car car) {
-        // Delete car logic
-        cars.remove(car);
-        System.out.println("Deleted car: " + car);
+        try {
+            CarDAO carDAO = new CarDAO();
+
+            // Convert carId from String to int
+            int carId = Integer.parseInt(car.getCarId());
+
+            // Call the DAO to delete the car
+            carDAO.deleteCar(carId);
+
+            // Remove the car from the ObservableList
+            cars.remove(car);
+            System.out.println("Deleted car: " + car);
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid car ID format: " + car.getCarId());
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Error deleting car: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
+
+
 
 
     private void loadUserData() {
@@ -381,4 +433,46 @@ public class DashboardController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void handleLogout() {
+        try {
+            // Show confirmation alert
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Logout Confirmation");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure you want to log out?");
+
+            // Wait for user response
+            if (alert.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
+                // Load the Login Page
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/LoginPage.fxml"));
+                Parent root = loader.load();
+
+                // Set the scene to the Login Page
+                Stage stage = (Stage) profileImage.getScene().getWindow();
+                Scene loginScene = new Scene(root);
+
+                // Apply LoginPage.css stylesheet
+                loginScene.getStylesheets().add(getClass().getResource("/styles/LoginPage.css").toExternalForm());
+
+                stage.setScene(loginScene);
+                stage.setTitle("Login");
+                stage.sizeToScene(); // Adjust the stage size if necessary
+            }
+        } catch (IOException e) {
+            System.err.println("Error during logout: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+
 }

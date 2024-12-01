@@ -3,10 +3,7 @@ package com.mycarmate.dao;
 import com.mycarmate.models.DatabaseConnection;
 import com.mycarmate.controllers.InsuranceRecord;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,11 +33,17 @@ public class InsuranceDAO {
                             rs.getString("end_date"),
                             rs.getDouble("coverage_amount")
                     ));
+                    System.out.println("Record fetched: " + carName + ", Coverage: " + rs.getDouble("coverage_amount"));
                 }
             }
+        } catch (SQLException e) {
+            System.err.println("Error fetching insurance records for user ID: " + userId);
+            e.printStackTrace();
+            throw e;
         }
         return records;
     }
+
 
     public void addInsurance(int userId, int carId, String providerName, String policyNumber, String startDate, String endDate, double coverageAmount) throws Exception {
         String query = "INSERT INTO insurance (user_id, car_id, provider_name, policy_number, start_date, end_date, coverage_amount) VALUES (?, ?, ?, ?, ?, ?, ?)";

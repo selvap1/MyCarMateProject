@@ -47,18 +47,18 @@ public class CarDAO {
     }
 
 
-    public Car fetchCarById(String carId) throws Exception {
+    public Car fetchCarById(int carId) throws Exception {
         String query = "SELECT * FROM cars WHERE car_id = ?";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
 
-            stmt.setString(1, carId);
+            stmt.setInt(1, carId); // Use setInt to bind the integer carId
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                // Use the full constructor
+                // Create a Car object using the constructor with appropriate field types
                 return new Car(
-                        rs.getString("car_id"),
+                        String.valueOf(rs.getInt("car_id")), // Convert int car_id to String for the Car class
                         rs.getString("make"),
                         rs.getString("model"),
                         rs.getInt("year"),
@@ -68,9 +68,13 @@ public class CarDAO {
                         rs.getString("inspection_date")
                 );
             }
+        } catch (SQLException e) {
+            System.err.println("Error fetching car by ID: " + e.getMessage());
+            throw e;
         }
         throw new Exception("Car not found with ID: " + carId);
     }
+
 
 
     /**
@@ -216,8 +220,10 @@ public class CarDAO {
                     java.sql.Date registrationExpDate = rs.getDate("registration_exp_date");
                     if (registrationExpDate != null) {
                         LocalDate regDate = registrationExpDate.toLocalDate();
-                        if (regDate.isBefore(LocalDate.now().plusMonths(1))) {
-                            reminders.add("Registration for " + make + " " + model + " (" + year + ") is expiring soon!");
+                        System.out.println("Processing registration expiration date: " + regDate);
+
+                        if (regDate.isBefore(LocalDate.now().plusMonths(1)) || regDate.isEqual(LocalDate.now().plusMonths(1))) {
+                            reminders.add("Registration for " + make + " " + model + " (" + year + ") is expiring on " + regDate + "!");
                         }
                     }
 
@@ -225,16 +231,48 @@ public class CarDAO {
                     java.sql.Date inspectionDate = rs.getDate("inspection_date");
                     if (inspectionDate != null) {
                         LocalDate inspDate = inspectionDate.toLocalDate();
-                        if (inspDate.isBefore(LocalDate.now().plusMonths(1))) {
-                            reminders.add("Inspection for " + make + " " + model + " (" + year + ") is expiring soon!");
+                        System.out.println("Processing inspection expiration date: " + inspDate);
+
+                        if (inspDate.isBefore(LocalDate.now().plusMonths(1)) || inspDate.isEqual(LocalDate.now().plusMonths(1))) {
+                            reminders.add("Inspection for " + make + " " + model + " (" + year + ") is expiring on " + inspDate + "!");
                         }
                     }
                 }
             }
         }
-
         return reminders;
     }
+
+    public void updateCar(Car car) throws Exception {
+        String query = "UPDATE cars SET make = ?, model = ?, year = ?, vin = ? WHERE car_id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, car.getMake());
+            stmt.setString(2, car.getModel());
+            stmt.setInt(3, car.getYear());
+            stmt.setString(4, car.getVin());
+            stmt.setString(5, car.getCarId());
+
+            stmt.executeUpdate();
+        }
+    }
+
+    public void deleteCar(int carId) throws Exception {
+        String query = "DELETE FROM cars WHERE car_id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, carId);
+            stmt.executeUpdate();
+            System.out.println("Car with ID " + carId + " has been deleted from the database.");
+        } catch (Exception e) {
+            System.err.println("Error deleting car: " + e.getMessage());
+            throw e;
+        }
+    }
+
 
 
 

@@ -1,0 +1,73 @@
+/* General Modal Styling */
+.modal-save-button, .modal-cancel-button {
+    -fx-font-size: 14px;
+    -fx-padding: 10 20;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 5, 0, 2, 2);
+}
+
+/* Save Button */
+.modal-save-button {
+    -fx-background-color: #3498db; /* Blue */
+    -fx-text-fill: white;
+}
+
+.modal-save-button:hover {
+    -fx-background-color: #2980b9; /* Darker blue on hover */
+}
+
+/* Cancel Button */
+.modal-cancel-button {
+    -fx-background-color: #e74c3c; /* Red */
+    -fx-text-fill: white;
+}
+
+.modal-cancel-button:hover {
+    -fx-background-color: #c0392b; /* Darker red on hover */
+}
+
+/* Form Fields */
+.text-field {
+    -fx-font-size: 14px;
+    -fx-padding: 8;
+    -fx-border-color: #ccc;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.text-field:focused {
+    -fx-border-color: #3498db; /* Blue border when focused */
+    -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.5), 5, 0, 0, 0);
+}
+
+/* Labels */
+.label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #2c3e50; /* Dark gray-blue */
+    -fx-padding: 5 0;
+}
+
+/* Title Label */
+.label[style*="-fx-font-size: 18px; -fx-font-weight: bold;"] {
+    -fx-text-fill: #34495e; /* Darker gray-blue for titles */
+}
+
+/* HBox Styling */
+.hbox {
+    -fx-spacing: 10;
+    -fx-padding: 10 0;
+}
+
+/* VBox Styling */
+.vbox {
+    -fx-spacing: 10;
+    -fx-padding: 20;
+    -fx-background-color: #f8f8f8;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
