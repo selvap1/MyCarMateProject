@@ -244,7 +244,7 @@ public class CarDAO {
     }
 
     public void updateCar(Car car) throws Exception {
-        String query = "UPDATE cars SET make = ?, model = ?, year = ?, vin = ? WHERE car_id = ?";
+        String query = "UPDATE cars SET make = ?, model = ?, year = ?, vin = ?, mileage = ?, registration_exp_date = ?, inspection_date = ? WHERE car_id = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -253,11 +253,15 @@ public class CarDAO {
             stmt.setString(2, car.getModel());
             stmt.setInt(3, car.getYear());
             stmt.setString(4, car.getVin());
-            stmt.setString(5, car.getCarId());
+            stmt.setInt(5, car.getMileage());
+            stmt.setDate(6, java.sql.Date.valueOf(car.getRegistrationExpDate()));
+            stmt.setDate(7, java.sql.Date.valueOf(car.getInspectionDate()));
+            stmt.setInt(8, Integer.parseInt(car.getCarId())); // Convert carId to int
 
             stmt.executeUpdate();
         }
     }
+
 
     public void deleteCar(int carId) throws Exception {
         String query = "DELETE FROM cars WHERE car_id = ?";
