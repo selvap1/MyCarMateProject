@@ -101,24 +101,33 @@ public class RegisterController {
     @FXML
     private void goToLogin() {
         try {
+            // Load the LoginPage.fxml file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/LoginPage.fxml"));
             Parent root = loader.load();
 
-            // Create a new scene for the Login Page
-            Scene loginScene = new Scene(root);
+            // Set fixed dimensions for the Login Page
+            double loginSceneWidth = 800;  // Adjust width as needed
+            double loginSceneHeight = 600; // Adjust height as needed
 
-            // Add the LoginPage.css stylesheet
+            // Create a new scene for the Login Page with specified dimensions
+            Scene loginScene = new Scene(root, loginSceneWidth, loginSceneHeight);
+
+            // Clear any existing stylesheets and add the LoginPage.css stylesheet
+            loginScene.getStylesheets().clear();
             loginScene.getStylesheets().add(getClass().getResource("/styles/LoginPage.css").toExternalForm());
 
             // Get the current stage and set the Login Page scene
             Stage stage = (Stage) goToLoginButton.getScene().getWindow();
             stage.setScene(loginScene);
             stage.setTitle("Login");
-            stage.sizeToScene(); // Optional: Adjust the window size if needed
+            stage.centerOnScreen(); // Center the stage on the screen
+            stage.show(); // Ensure the stage is refreshed
         } catch (IOException e) {
+            System.err.println("Error navigating to Login Page: " + e.getMessage());
             e.printStackTrace();
         }
     }
+
 
 
     private void redirectToLogin() {
@@ -134,18 +143,25 @@ public class RegisterController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/LoginPage.fxml"));
             Parent root = loader.load();
 
-            // Create a new scene for the Login Page
-            Scene loginScene = new Scene(root);
+            // Set fixed dimensions for the Login Page
+            double loginSceneWidth = 800;  // Adjust width as needed
+            double loginSceneHeight = 600; // Adjust height as needed
+
+            // Create a new scene for the Login Page with specified dimensions
+            Scene loginScene = new Scene(root, loginSceneWidth, loginSceneHeight);
 
             // Add the LoginPage.css stylesheet
+            loginScene.getStylesheets().clear();
             loginScene.getStylesheets().add(getClass().getResource("/styles/LoginPage.css").toExternalForm());
 
             // Get the current stage and set the Login Page scene
-            Stage stage = (Stage) statusLabel.getScene().getWindow();
+            Stage stage = (Stage) goToLoginButton.getScene().getWindow();
             stage.setScene(loginScene);
             stage.setTitle("Login");
-            stage.sizeToScene(); // Optional: Adjust the window size if needed
+            stage.centerOnScreen(); // Center the stage on the screen
+            stage.show(); // Ensure the stage is refreshed
         } catch (IOException e) {
+            System.err.println("Error redirecting to Login Page: " + e.getMessage());
             e.printStackTrace();
         }
     }

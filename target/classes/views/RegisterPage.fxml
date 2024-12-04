@@ -11,11 +11,28 @@
       stylesheets="@styles/RegisterPage.css">
     <Label text="Register" style="-fx-font-size: 24; -fx-font-weight: bold;" />
     <Label fx:id="statusLabel" text="" />
-    <TextField fx:id="firstNameField" promptText="First Name" />
-    <TextField fx:id="lastNameField" promptText="Last Name" />
-    <TextField fx:id="emailField" promptText="Email" />
-    <TextField fx:id="usernameField" promptText="Username" />
-    <PasswordField fx:id="passwordField" promptText="Password" />
-    <Button fx:id="registerButton" text="Register" onAction="#handleRegister" />
-    <Button fx:id="goToLoginButton" text="Back to Login" onAction="#goToLogin" />
+
+    <!-- First Name -->
+    <Label text="First Name" styleClass="input-label" />
+    <TextField fx:id="firstNameField" promptText="Enter your first name" styleClass="input-field" />
+
+    <!-- Last Name -->
+    <Label text="Last Name" styleClass="input-label" />
+    <TextField fx:id="lastNameField" promptText="Enter your last name" styleClass="input-field" />
+
+    <!-- Email -->
+    <Label text="Email" styleClass="input-label" />
+    <TextField fx:id="emailField" promptText="Enter your email address" styleClass="input-field" />
+
+    <!-- Username -->
+    <Label text="Username" styleClass="input-label" />
+    <TextField fx:id="usernameField" promptText="Enter your username" styleClass="input-field" />
+
+    <!-- Password -->
+    <Label text="Password" styleClass="input-label" />
+    <PasswordField fx:id="passwordField" promptText="Enter your password" styleClass="input-field" />
+
+    <!-- Buttons -->
+    <Button fx:id="registerButton" text="Register" onAction="#handleRegister" styleClass="action-button" />
+    <Button fx:id="goToLoginButton" text="Back to Login" onAction="#goToLogin" styleClass="secondary-button" />
 </VBox>

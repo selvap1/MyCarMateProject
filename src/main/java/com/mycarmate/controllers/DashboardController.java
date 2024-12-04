@@ -462,22 +462,26 @@ public class DashboardController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/LoginPage.fxml"));
                 Parent root = loader.load();
 
-                // Set the scene to the Login Page
-                Stage stage = (Stage) profileImage.getScene().getWindow();
-                Scene loginScene = new Scene(root);
-
-                // Apply LoginPage.css stylesheet
+                // Apply proper CSS styling and set scene dimensions
+                double loginSceneWidth = 800;  // Set a proportionate width for LoginPage
+                double loginSceneHeight = 600; // Set a proportionate height for LoginPage
+                Scene loginScene = new Scene(root, loginSceneWidth, loginSceneHeight);
+                loginScene.getStylesheets().clear();
                 loginScene.getStylesheets().add(getClass().getResource("/styles/LoginPage.css").toExternalForm());
 
+                // Set the scene to the Login Page
+                Stage stage = (Stage) profileImage.getScene().getWindow();
                 stage.setScene(loginScene);
                 stage.setTitle("Login");
-                stage.sizeToScene(); // Adjust the stage size if necessary
+                stage.centerOnScreen(); // Center the stage on the screen
             }
         } catch (IOException e) {
             System.err.println("Error during logout: " + e.getMessage());
             e.printStackTrace();
         }
     }
+
+
 
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
