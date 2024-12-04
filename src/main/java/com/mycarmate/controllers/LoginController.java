@@ -111,18 +111,32 @@ public class LoginController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/RegisterPage.fxml"));
             Parent root = loader.load();
 
+            // Set fixed dimensions for the Register Page
+            double registerSceneWidth = 800;  // Adjust width as needed
+            double registerSceneHeight = 600; // Adjust height as needed
+
+            // Create the new scene with specified dimensions
+            Scene registerScene = new Scene(root, registerSceneWidth, registerSceneHeight);
+
+            // Apply styling for the Register Page
+            registerScene.getStylesheets().clear();
+            registerScene.getStylesheets().add(getClass().getResource("/styles/RegisterPage.css").toExternalForm());
+
             // Get the current stage (window)
             Stage stage = (Stage) signUpButton.getScene().getWindow();
 
             // Set the scene with the Register Page
-            stage.setScene(new Scene(root));
+            stage.setScene(registerScene);
             stage.setTitle("Register");
-            stage.sizeToScene(); // Optional
-
+            stage.centerOnScreen(); // Center the stage on the screen
+            stage.show(); // Ensure the stage is updated
         } catch (IOException e) {
+            System.err.println("Error navigating to Register Page: " + e.getMessage());
             e.printStackTrace();
         }
     }
+
+
 
 
 

@@ -19,20 +19,28 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/LoginPage.fxml"));
             Parent root = loader.load();
 
-            // Create the scene and apply styles
-            Scene scene = new Scene(root);
+            // Set initial dimensions for the LoginPage
+            double initialWidth = 800;  // Adjust this value as needed
+            double initialHeight = 600; // Adjust this value as needed
+
+            // Create the scene with specified dimensions and apply styles
+            Scene scene = new Scene(root, initialWidth, initialHeight);
             scene.getStylesheets().add(getClass().getResource("/styles/LoginPage.css").toExternalForm());
 
             // Set the stage properties
             primaryStage.setTitle("MyCarMate");
             primaryStage.setScene(scene);
-            primaryStage.show();
 
+            // Center the stage on the screen
+            primaryStage.centerOnScreen();
+
+            primaryStage.show();
         } catch (Exception e) {
             System.err.println("Error loading FXML or CSS: " + e.getMessage());
             e.printStackTrace();
         }
     }
+
 
     public static void main(String[] args) {
         // Set the path to the service account key for Google Cloud SQL

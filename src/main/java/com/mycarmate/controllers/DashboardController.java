@@ -462,8 +462,10 @@ public class DashboardController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/LoginPage.fxml"));
                 Parent root = loader.load();
 
-                // Apply proper CSS styling and reset the stage
-                Scene loginScene = new Scene(root);
+                // Apply proper CSS styling and set scene dimensions
+                double loginSceneWidth = 800;  // Set a proportionate width for LoginPage
+                double loginSceneHeight = 600; // Set a proportionate height for LoginPage
+                Scene loginScene = new Scene(root, loginSceneWidth, loginSceneHeight);
                 loginScene.getStylesheets().clear();
                 loginScene.getStylesheets().add(getClass().getResource("/styles/LoginPage.css").toExternalForm());
 
@@ -478,6 +480,7 @@ public class DashboardController {
             e.printStackTrace();
         }
     }
+
 
 
     private void showAlert(String title, String content) {
