@@ -12,6 +12,8 @@ MyCarMate is a car maintenance management application designed to help users tra
     - Registration expiration dates.
     - Inspection expiration dates.
     - Oil changes and other maintenance tasks.
+      ![Dashboard Screenshot](https://github.com/antho/MyCarMateProject/blob/main/screenshots/DashboardScreenshot.png)
+
 
 ### Car Management
 - Add, edit, or delete cars with detailed information:
@@ -24,11 +26,13 @@ MyCarMate is a car maintenance management application designed to help users tra
     - Oil changes, inspections, registrations, and custom service types.
 - View past maintenance records in a searchable table.
 - Add, edit, and delete maintenance records.
+- ![Maintenance Record Screenshot](screenshots/MaintenanceScreenshot.png)
 
 ### Insurance Management
 - Add, edit, and delete insurance records for each vehicle.
 - Track provider, policy number, start and end dates, and coverage amounts.
 - View all insurance records in a structured table with action buttons.
+- ![Insurance Record Screenshot](screenshots/InsuranceScreenshot.png)
 
 ### User Authentication
 - Secure login and sign-up system using Firebase Authentication.
