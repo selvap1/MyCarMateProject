@@ -12,7 +12,7 @@ MyCarMate is a car maintenance management application designed to help users tra
     - Registration expiration dates.
     - Inspection expiration dates.
     - Oil changes and other maintenance tasks.
-- ![Dashboard Screenshot](screenshots/DashboardScreenshot.png)
+      ![Dashboard Screenshot](https://github.com/antho/MyCarMateProject/blob/main/screenshots/DashboardScreenshot.png)
 
 
 ### Car Management
